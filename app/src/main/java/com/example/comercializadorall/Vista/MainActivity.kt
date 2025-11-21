@@ -1,6 +1,8 @@
 package com.example.comercializadorall.Vista
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -54,7 +56,16 @@ class MainActivity : AppCompatActivity(), MainContract {
         presenter.obtenerProductos()
 
         iniciarReproductorVideoFijo()
+        val openLoginImage: ImageView = findViewById(R.id.imgPrefil)
+        openLoginImage.setOnClickListener {
+            // 3. Crear un Intent para iniciar la LoginActivity
+            val intent = Intent(this, Login::class.java)
+
+            // 4. Iniciar la nueva Activity
+            startActivity(intent)
+        }
     }
+
 
     private fun iniciarReproductorVideoFijo() {
         val nombreVideoFijo = "video_promocional.mp4"

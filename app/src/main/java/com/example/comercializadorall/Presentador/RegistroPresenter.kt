@@ -8,7 +8,8 @@ class RegistrPresenter (
     private val model: RegistroModel) {
     // Parámetros actualizados para incluir apellido y el nombre correcto del campo (correo)
     fun registrarUsuario(nombre: String, apellido: String, correo: String, password: String) {
-        model.registrarUsuario(nombre, apellido, correo, password, object : RegistroModel.OnRegistroListener {
+        val rolFijo = "Cliente"
+        model.registrarUsuario(nombre, apellido, correo, password,rolFijo, object : RegistroModel.OnRegistroListener {
             override fun onSuccess(message: String) {
                 vista.mostrarMensaje(message)
                 vista.registroExitoso()

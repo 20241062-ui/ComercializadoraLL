@@ -15,7 +15,7 @@ class RegistroModel(private val apiService: ifaceApiService) {
     }
 
     // Parámetros actualizados para incluir apellido y los nombres de campo de la API (vchnombre, vchcorreo)
-    fun registrarUsuario(nombre: String, apellido: String, correo: String, password: String, listener: OnRegistroListener) {
+    fun registrarUsuario(nombre: String, apellido: String, correo: String, password: String,rolFijo:String, listener: OnRegistroListener) {
         apiService.registrarUsuario("registrar", nombre, apellido, correo, password)
             .enqueue(object : Callback<List<clsDatosRespuesta>> {
                 override fun onResponse(

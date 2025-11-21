@@ -27,30 +27,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/blacklogo" />
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="100dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="32dp"
-        android:text="Categorias"
-        android:textSize="10sp"
-        app:layout_constraintEnd_toStartOf="@+id/button3"
-        app:layout_constraintHorizontal_bias="0.318"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="100dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="32dp"
-        android:text="Acerca de..."
-        android:textSize="10sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.867"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <EditText
         android:id="@+id/editTextText"
         android:layout_width="211dp"
@@ -77,4 +53,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:resize_mode="fit"
         app:use_controller="true" />
+
+    <ImageView
+        android:id="@+id/imgPrefil"
+        android:layout_width="73dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="64dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.076"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
 </androidx.constraintlayout.widget.ConstraintLayout>

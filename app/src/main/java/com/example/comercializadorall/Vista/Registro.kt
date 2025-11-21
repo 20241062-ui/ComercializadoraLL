@@ -36,7 +36,7 @@ class Registro : AppCompatActivity(), RegistroContract {
             insets
         }
         etNombre = findViewById(R.id.edtUNombre)
-        etApellido = findViewById(R.id.edtApellido) // ⚠️ ASUMIMOS ESTE ID EN EL XML
+        etApellido = findViewById(R.id.edtApellido)
         etCorreo = findViewById(R.id.edtCorreo)
         etPasswordRegistro = findViewById(R.id.edtPass)
         btnRegistrar = findViewById(R.id.btnRegistrar)
