@@ -1,18 +1,22 @@
 package com.example.comercializadorall.Presentador
 
-class RegistroPresenter {
-    private val vista: RegistroContrac,
-    private val model: RegistroModel) {
-        fun registrarUsuario(nombreUsuario: String, email: String, password: String) {
-            model.registrarUsuario(nombreUsuario, email, password, object : RegistroModel.OnRegistroListener {
-                override fun onSuccess(message: String) {
-                    vista.mostrarMensaje(message)
-                    vista.registroExitoso()
-                }
+import com.example.comercializadorall.Modelo.RegistroModel
+import com.example.comercializadorall.Vista.Contracts.RegistroContract // Contrato actualizado
 
-                override fun onFailure(message: String) {
-                    vista.mostrarMensaje(message)
-                }
-            })
-        }
+class RegistrPresenter (
+    private val vista: RegistroContract, // Contrato actualizado
+    private val model: RegistroModel) {
+    // Parámetros actualizados para incluir apellido y el nombre correcto del campo (correo)
+    fun registrarUsuario(nombre: String, apellido: String, correo: String, password: String) {
+        model.registrarUsuario(nombre, apellido, correo, password, object : RegistroModel.OnRegistroListener {
+            override fun onSuccess(message: String) {
+                vista.mostrarMensaje(message)
+                vista.registroExitoso()
+            }
+
+            override fun onFailure(message: String) {
+                vista.mostrarMensaje(message)
+            }
+        })
+    }
 }

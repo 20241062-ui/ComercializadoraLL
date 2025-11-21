@@ -1,5 +1,7 @@
 package com.example.comercializadorall.Modelo
 
+import com.example.comercializadorall.Modelo.ifaceApiService // Interfaz actualizada
+import com.example.comercializadorall.Vista.clsDatosRespuesta // Clase de respuesta
 import com.google.gson.GsonBuilder
 import retrofit2.Call
 import retrofit2.Callback
@@ -8,6 +10,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class LoginModel {
+    // Referencia a la interfaz actualizada
     private val apiService: ifaceApiService
 
     init {
@@ -15,15 +18,17 @@ class LoginModel {
             .setLenient()
             .create()
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://javier.grupoctic.com/Peliculas/api/")
-            .addConverterFactory(GsonConverterFactory.create())
+            // URL Base actualizada a Productos/api/
+            .baseUrl("https://javier.grupoctic.com/Productos/api/")
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
 
         apiService = retrofit.create(ifaceApiService::class.java)
     }
 
-    fun iniciarSesion(email: String, password: String, callback: (List<clsDatosRespuesta>?, String?) -> Unit) {
-        apiService.iniciarSesion("login", email, password)
+    // Parámetros actualizados a vchcorreo y vchpassword (según tu API)
+    fun iniciarSesion(correo: String, password: String, callback: (List<clsDatosRespuesta>?, String?) -> Unit) {
+        apiService.iniciarSesion("login", correo, password)
             .enqueue(object : Callback<List<clsDatosRespuesta>> {
                 override fun onResponse(
                     call: Call<List<clsDatosRespuesta>>,

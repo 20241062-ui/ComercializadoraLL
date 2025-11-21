@@ -12,6 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ComercializadoraLL">
         <activity
+            android:name=".Vista.Registro"
+            android:exported="false" />
+        <activity
+            android:name=".Vista.Login"
+            android:exported="false" />
+        <activity
+            android:name=".Vista.VistaDetalle"
+            android:exported="false" />
+        <activity
             android:name=".Vista.producto_layout"
             android:exported="false" />
         <activity

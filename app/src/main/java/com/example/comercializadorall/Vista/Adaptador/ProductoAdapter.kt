@@ -9,65 +9,54 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.comercializadorall.Modelo.clsProductos // Importación de tu data class
-import com.example.comercializadorall.R // Asegúrate de que este sea tu R real
-import com.example.comercializadorall.Vista.producto_layout // Vista de detalle actualizada
+import com.example.comercializadorall.Modelo.clsProductos // Modelo actualizado
+import com.example.comercializadorall.R
+import com.example.comercializadorall.Vista.VistaDetalle // Vista de detalle renombrada
 
-class ProductoAdaptador(
-    val contexto: Context,
-    // La lista ahora es de clsProductos
-    val listaproductos: List<clsProductos>
-) : RecyclerView.Adapter<ProductoAdaptador.ProductoViewHolder>() {
+// 1. Definir interfaz para manejar el clic y comunicar el video
+interface OnVideoSelectedListener {
+    fun onVideoSelected(videoFileName: String)
+}
+class ProductoAdaptador(val contexto: Context, val listaproductos:List<clsProductos>): RecyclerView.Adapter<ProductoAdaptador.ProductoViewHolder>() { // Clases renombradas
 
-    class ProductoViewHolder(control: View) : RecyclerView.ViewHolder(control) {
-        // Los IDs de los controles se mantienen igual si el layout es idéntico
-        val imgproducto: ImageView = control.findViewById(R.id.imgProducto)
-        val txtnombre: TextView = control.findViewById(R.id.txtNombre)
-        val txtdescripcion: TextView = control.findViewById(R.id.txtPrecio)
+    class ProductoViewHolder(control: View): RecyclerView.ViewHolder(control){ // Clase renombrada
+        // IDs asumidos: imgFoto, txtNombre, txtDescripcion
+        val imgproducto: ImageView =control.findViewById(R.id.imgProducto)
+        val txtnombre: TextView =control.findViewById(R.id.txtNombre)
+        val txtdescripcion: TextView =control.findViewById(R.id.txtPrecio)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductoViewHolder {
-        // Vinculación con el layout de producto (se asume R.layout.producto_layout)
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.activity_producto_layout, parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductoViewHolder { // Clase renombrada
+        // Layout asumido: producto_layout
+        val view= LayoutInflater.from(parent.context).inflate(R.layout.activity_producto_layout,parent,false)
         return ProductoViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ProductoViewHolder, position: Int) {
-        val producto = listaproductos[position]
+    override fun onBindViewHolder(holder: ProductoViewHolder,position: Int) { // Clase renombrada
 
-        // Asignación de datos usando los campos de clsProductos
-        holder.txtnombre.text = producto.vchNombre
-        holder.txtdescripcion.text = producto.vchDescripcion
+        val producto=listaproductos[position]
 
-        // *** IMPORTANTE: REVISAR LA CARGA DE IMAGEN ***
-        // Si vchImagen es realmente un String con el nombre del archivo:
-        val imageUrl = "https://javier.grupoctic.com/Productos/img/" + producto.vchImagen
+        holder.txtnombre.text=producto.vchNombre // Campo actualizado
+        holder.txtdescripcion.text=producto.vchDescripcion // Campo actualizado
 
-        // Si vchImagen es un Int que es un Resource ID (R.drawable.X), usa:
-        // val imageResourceId = producto.vchImagen
-
-        // Carga con Glide (asumiendo que necesitas cargar desde una URL como antes)
+        // URL Base actualizada a Productos/img/
         Glide.with(contexto)
-            .load(imageUrl)
+            .load("https://javier.grupoctic.com/Productos/img/" + producto.vchImagen)
             .into(holder.imgproducto)
-
         holder.imgproducto.setOnClickListener {
             verDetalleProducto(producto)
         }
     }
-
-    fun verDetalleProducto(producto: clsProductos) {
-        // Se cambia el destino a VistaDetalleProducto (se asume que existe)
-        val intent = Intent(contexto, producto_layout::class.java).apply {
-            // Se pasan las claves de producto relevantes
-            putExtra("producto_no_serie", producto.vchNo_Serie)
-            putExtra("producto_nombre", producto.vchNombre)
-            putExtra("producto_descripcion", producto.vchDescripcion)
-            putExtra("producto_precio", producto.floPrecioUnitario)
-            putExtra("producto_stock", producto.intStock)
-
-            // Si la imagen es un String o Int, se pasa directamente
-            putExtra("producto_imagen", producto.vchImagen)
+    fun verDetalleProducto(producto: clsProductos){
+        val intent= Intent(contexto, VistaDetalle::class.java).apply{
+            // Usamos las claves de producto correctas
+            putExtra("producto_id",producto.vchNo_Serie)
+            putExtra("producto_nombre",producto.vchNombre)
+            putExtra("producto_descripcion",producto.vchDescripcion)
+            putExtra("producto_sinopsis", "Precio: ${producto.floPrecioUnitario} | Stock: ${producto.intStock}")
+            putExtra("producto_imagen",producto.vchImagen)
+            // Usamos el nombre de la imagen para el video (asumido)
+            putExtra("producto_video",producto.vchImagen)
         }
         contexto.startActivity(intent)
     }
@@ -75,5 +64,4 @@ class ProductoAdaptador(
     override fun getItemCount(): Int {
         return listaproductos.size
     }
-
 }

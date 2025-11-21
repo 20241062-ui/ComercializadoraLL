@@ -1,13 +1,17 @@
 package com.example.comercializadorall.Presentador
 
-class ReproducirPresenter(val vista: ReproducirContrac) {
+import com.example.comercializadorall.Vista.Contracts.ReproducirContract // Contrato actualizado
+import com.example.comercializadorall.Modelo.ReproducirModel
+
+
+class ReproducirVideoProductoPresenter(val vista: ReproducirContract) { // Clase renombrada
     private val modelo = ReproducirModel()
 
-    fun cargarVideo(nombrePelicula: String) {
-        if (nombrePelicula.isEmpty()) {
-            vista.mostrarError("Nombre de película vacío")
+    fun cargarVideo(nombreArchivoVideo: String) { // Renombrado
+        if (nombreArchivoVideo.isEmpty()) {
+            vista.mostrarError("Nombre de archivo de video vacío")
         } else {
-            val url = modelo.obtenerUrlVideo(nombrePelicula)
+            val url = modelo.obtenerUrlVideo(nombreArchivoVideo)
             vista.mostrarVideo(url)
         }
     }

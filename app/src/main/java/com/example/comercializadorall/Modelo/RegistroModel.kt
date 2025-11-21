@@ -1,17 +1,22 @@
 package com.example.comercializadorall.Modelo
 
+import com.example.comercializadorall.Vista.clsDatosRespuesta
+import com.example.comercializadorall.Modelo.ifaceApiProductosService // Interfaz actualizada
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class RegistroModel {
+// El constructor ahora espera la interfaz actualizada
+class RegistroModel(private val apiService: ifaceApiProductosService) {
+
     interface OnRegistroListener {
         fun onSuccess(message: String)
         fun onFailure(message: String)
     }
 
-    fun registrarUsuario(nombreUsuario: String, email: String, password: String, listener: OnRegistroListener) {
-        apiService.registrarUsuario("registrar", nombreUsuario, email, password)
+    // Parámetros actualizados para incluir apellido y los nombres de campo de la API (vchnombre, vchcorreo)
+    fun registrarUsuario(nombre: String, apellido: String, correo: String, password: String, listener: OnRegistroListener) {
+        apiService.registrarUsuario("registrar", nombre, apellido, correo, password)
             .enqueue(object : Callback<List<clsDatosRespuesta>> {
                 override fun onResponse(
                     call: Call<List<clsDatosRespuesta>>,
@@ -19,7 +24,8 @@ class RegistroModel {
                 ) {
                     if (response.isSuccessful) {
                         response.body()?.let { datos ->
-                            if (datos.isNotEmpty() && datos[0].Estado == "True") {
+                            // El API de registro devuelve 'true' como String
+                            if (datos.isNotEmpty() && datos[0].Estado.equals("true", ignoreCase = true)) {
                                 listener.onSuccess(datos[0].Salida)
                             } else {
                                 listener.onFailure(datos[0].Salida)
