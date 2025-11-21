@@ -7,6 +7,24 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface ifaceApiService {
-    @GET("apiProductos.php")
-    fun obtenerPeliculas(): Call<List<clsProductos>>
+    @GET("apiPeliculas.php")
+    fun obtenerPeliculas(): retrofit2.Call<List<clsPeliculas>>
+
+    //Para login y registro
+    @FormUrlEncoded
+    @POST("apiAcceso.php")
+    fun registrarUsuario(
+        @Field("action") action: String,
+        @Field("nombreUsuario") nombreusuario: String,
+        @Field("email") email: String,
+        @Field("password") password: String
+    ): retrofit2.Call<List<clsDatosRespuesta>>
+
+    @FormUrlEncoded
+    @POST("apiAcceso.php")
+    fun iniciarSesion(
+        @Field("action") action: String,
+        @Field("email") email: String,
+        @Field("password") password: String
+    ): retrofit2.Call<List<clsDatosRespuesta>>
 }

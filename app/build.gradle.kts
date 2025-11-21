@@ -47,4 +47,16 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    implementation ("com.squareup.retrofit2:retrofit:3.0.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation ("com.github.bumptech.glide:glide:5.0.5")
+    implementation ("com.google.android.exoplayer:exoplayer:2.19.1")
+
+// Keep these (and ensure they use the latest version)
+    implementation("androidx.media3:media3-exoplayer:1.8.0")
+    implementation("androidx.media3:media3-ui:1.8.0")
+    implementation("androidx.media3:media3-exoplayer-dash:1.8.0")
+    implementation("androidx.media3:media3-extractor:1.8.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:5.3.2")
 }
