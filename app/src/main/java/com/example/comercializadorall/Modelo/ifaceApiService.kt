@@ -1,6 +1,6 @@
 package com.example.comercializadorall.Modelo
 
-import android.telecom.Call
+import retrofit2.Call
 import com.example.comercializadorall.Vista.clsDatosRespuesta
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -9,7 +9,7 @@ import retrofit2.http.POST
 
 interface ifaceApiService {
     @GET("apiProductos.php")
-    fun obtenerProductos(): Call<List<clsProductos>>
+    fun obtenerProductos(): Call<List<clsProductos>> // <-- ¡Verifica esta línea!
 
     // 2. Registro (Actualizado para incluir Apellido y vchNombre)
     @FormUrlEncoded

@@ -2,6 +2,7 @@ package com.example.comercializadorall.Vista
 
 import android.os.Bundle
 import android.widget.Toast
+import android.widget.VideoView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -16,15 +17,20 @@ import androidx.media3.common.MediaItem // Necesario para ExoPlayer
 import androidx.media3.exoplayer.ExoPlayer // Necesario para ExoPlayer
 import androidx.media3.ui.PlayerView // Necesario para la vista del reproductor
 import com.example.comercializadorall.Modelo.ReproducirModel
+import com.example.comercializadorall.Vista.Adaptador.ProductoAdaptador
 
-private val MainActivity.view: Any
 
-class MainActivity : AppCompatActivity(), MainContract {
+class MainActivityProductos : AppCompatActivity(), MainContract {
 
+    // Componentes de la vista
     private lateinit var rcvProductos: RecyclerView
     private lateinit var presenter: MainPresenter
+
+    // Componentes del reproductor
     private lateinit var playerView: PlayerView
-    private lateinit var exoPlayer: ExoPlayer
+    private lateinit var exoPlayer: ExoPlayer // ¡IMPORTANTE!: No inicializar aquí si se hace en onCreate
+
+    // Modelo para la URL de video
     private val reproducirModel = ReproducirModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,39 +42,41 @@ class MainActivity : AppCompatActivity(), MainContract {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        rcvProductos=findViewById(R.id.rcvProductos)
-        rcvProductos.layoutManager= LinearLayoutManager(this)
-        playerView = findViewById(R.id.playerView) // ⚠️ ASUMIMOS ESTE ID EN activity_main.xml
-        exoPlayer = ExoPlayer.Builder(this).build()
-        playerView.player = exoPlayer
-        presenter=MainPresenter(this)
+
+        // --- 1. Inicialización de Vistas ---
+        rcvProductos = findViewById(R.id.rcvProductos)
+        playerView = findViewById(R.id.playerView) // Inicialización de PlayerView
+
+        // --- 2. Configuración de RecyclerView ---
+        rcvProductos.layoutManager = LinearLayoutManager(this)
+
+        // --- 3. Inicialización del Presenter ---
+        presenter = MainPresenter(this)
         presenter.obtenerProductos()
-        playerView = findViewById(R.id.playerView) // ⚠️ Asegúrate de que este ID exista en activity_main.xml
+
         iniciarReproductorVideoFijo()
     }
-    private fun iniciarReproductorVideoFijo() {
-        // ⚠️ DEFINE QUÉ VIDEO QUIERES REPRODUCIR POR DEFECTO
-        // Usaremos un nombre de archivo de ejemplo:
-        val nombreVideoFijo = "video_promocional.mp4"
 
-        // Obtener la URL usando el modelo
+    private fun iniciarReproductorVideoFijo() {
+        val nombreVideoFijo = "video_promocional.mp4"
         val videoUrl = reproducirModel.obtenerUrlVideo(nombreVideoFijo)
 
-        // Inicializar y preparar el ExoPlayer
+        // ⚠️ CORRECCIÓN: Inicialización de ExoPlayer solo si es la primera vez que se hace.
+        // Dado que se declara como 'lateinit' y se le asigna valor dos veces en el código original,
+        // lo corregimos para que la inicialización ocurra solo aquí, usando el constructor.
         exoPlayer = ExoPlayer.Builder(this).build()
-        playerView.player = exoPlayer
+        playerView.player = exoPlayer // Vinculamos la vista con el motor
 
         val mediaItem = MediaItem.fromUri(videoUrl)
         exoPlayer.setMediaItem(mediaItem)
         exoPlayer.prepare()
         exoPlayer.playWhenReady = true
-
-        // Puedes agregar aquí la opción de pausar/reanudar con un botón si lo deseas.
     }
 
     override fun mostrarProductos(productos: List<clsProductos>) {
-        // NOTA: El constructor del adaptador ahora es simple, sin el listener
-        val adaptador = ProductoAdapter(this, productos)
+        // CORRECCIÓN: Asegúrate de que el nombre del adaptador coincida con la definición (minúscula o mayúscula)
+        // Asumiendo que es 'ProductoAdaptador' o 'productoAdaptador' (revisa tu archivo).
+        val adaptador = ProductoAdaptador(this, productos)
         rcvProductos.adapter = adaptador
     }
 
@@ -76,14 +84,6 @@ class MainActivity : AppCompatActivity(), MainContract {
         Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show()
     }
 
-    fun onVideoSelected(videoFileName: String) {
-        presenter.ReproducirPresenter(videoFileName)
-    }
-    fun ReproducirPresenter(videoFileName: String) {
-        // Lógica para obtener la URL y llamar a la vista
-        val url = reproducirModel.obtenerUrlVideo(videoFileName)
-        view.mostrarVideoReproductor(url) // Esto llama al método del Contrato/Actividad
-    }
     override fun onResume() {
         super.onResume()
         if (::exoPlayer.isInitialized) {
