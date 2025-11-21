@@ -2,7 +2,6 @@ package com.example.comercializadorall.Vista
 
 import android.os.Bundle
 import android.widget.Toast
-import android.widget.VideoView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -20,7 +19,7 @@ import com.example.comercializadorall.Modelo.ReproducirModel
 import com.example.comercializadorall.Vista.Adaptador.ProductoAdaptador
 
 
-class MainActivityProductos : AppCompatActivity(), MainContract {
+class MainActivity : AppCompatActivity(), MainContract {
 
     // Componentes de la vista
     private lateinit var rcvProductos: RecyclerView
@@ -61,9 +60,6 @@ class MainActivityProductos : AppCompatActivity(), MainContract {
         val nombreVideoFijo = "video_promocional.mp4"
         val videoUrl = reproducirModel.obtenerUrlVideo(nombreVideoFijo)
 
-        // ⚠️ CORRECCIÓN: Inicialización de ExoPlayer solo si es la primera vez que se hace.
-        // Dado que se declara como 'lateinit' y se le asigna valor dos veces en el código original,
-        // lo corregimos para que la inicialización ocurra solo aquí, usando el constructor.
         exoPlayer = ExoPlayer.Builder(this).build()
         playerView.player = exoPlayer // Vinculamos la vista con el motor
 
@@ -74,8 +70,6 @@ class MainActivityProductos : AppCompatActivity(), MainContract {
     }
 
     override fun mostrarProductos(productos: List<clsProductos>) {
-        // CORRECCIÓN: Asegúrate de que el nombre del adaptador coincida con la definición (minúscula o mayúscula)
-        // Asumiendo que es 'ProductoAdaptador' o 'productoAdaptador' (revisa tu archivo).
         val adaptador = ProductoAdaptador(this, productos)
         rcvProductos.adapter = adaptador
     }

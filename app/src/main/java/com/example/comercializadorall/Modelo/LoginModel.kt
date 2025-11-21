@@ -19,7 +19,7 @@ class LoginModel {
             .create()
         val retrofit = Retrofit.Builder()
             // URL Base actualizada a Productos/api/
-            .baseUrl("https://javier.grupoctic.com/Productos/api/")
+            .baseUrl("https://comercializadorall.grupoctic.com/ComercializadoraLL/API/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
 

@@ -1,13 +1,13 @@
 package com.example.comercializadorall.Modelo
 
 import com.example.comercializadorall.Vista.clsDatosRespuesta
-import com.example.comercializadorall.Modelo.ifaceApiProductosService // Interfaz actualizada
+import com.example.comercializadorall.Modelo.ifaceApiService // Interfaz actualizada
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 // El constructor ahora espera la interfaz actualizada
-class RegistroModel(private val apiService: ifaceApiProductosService) {
+class RegistroModel(private val apiService: ifaceApiService) {
 
     interface OnRegistroListener {
         fun onSuccess(message: String)

@@ -41,7 +41,7 @@ class ProductoAdaptador(val contexto: Context, val listaproductos:List<clsProduc
 
         // URL Base actualizada a Productos/img/
         Glide.with(contexto)
-            .load("https://javier.grupoctic.com/Productos/img/" + producto.vchImagen)
+            .load("https://comercializadorall.grupoctic.com/ComercializadoraLL/Recursos/" + producto.vchImagen)
             .into(holder.imgproducto)
         holder.imgproducto.setOnClickListener {
             verDetalleProducto(producto)

@@ -46,7 +46,7 @@ class Registro : AppCompatActivity(), RegistroContract {
         val okHttpClient = OkHttpClient.Builder().addInterceptor(logging).build()
         val retrofit = Retrofit.Builder()
             // URL Base actualizada a Productos/api/
-            .baseUrl("https://javier.grupoctic.com/Productos/api/")
+            .baseUrl("https://comercializadorall.grupoctic.com/ComercializadoraLL/API/")
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()

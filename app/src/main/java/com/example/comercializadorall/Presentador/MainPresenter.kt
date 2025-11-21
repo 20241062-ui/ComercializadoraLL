@@ -18,7 +18,7 @@ class MainPresenter(private val view: MainContract) { // Contrato actualizado
     init {
         val retrofit = Retrofit.Builder()
             // URL base actualizada a Productos/api/
-            .baseUrl("https://javier.grupoctic.com/Productos/api/")
+            .baseUrl("https://comercializadorall.grupoctic.com/ComercializadoraLL/API/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(OkHttpClient())
             .build()

@@ -5,6 +5,6 @@ class ReproducirModel {
     fun obtenerUrlVideo(nombreProducto: String): String {
 
         // URL Base actualizada a Productos/videos/
-        return "https://javier.grupoctic.com/Productos/videos/$nombreProducto"
+        return "https://comercializadorall.grupoctic.com/ComercializadoraLL/Videos/redmagic11pro.mp4"
     }
 }
