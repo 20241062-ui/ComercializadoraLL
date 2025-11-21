@@ -17,6 +17,8 @@ import androidx.media3.exoplayer.ExoPlayer // Necesario para ExoPlayer
 import androidx.media3.ui.PlayerView // Necesario para la vista del reproductor
 import com.example.comercializadorall.Modelo.ReproducirModel
 
+private val MainActivity.view: Any
+
 class MainActivity : AppCompatActivity(), MainContract {
 
     private lateinit var rcvProductos: RecyclerView
@@ -74,8 +76,13 @@ class MainActivity : AppCompatActivity(), MainContract {
         Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show()
     }
 
-    override fun onVideoSelected(videoFileName: String) {
-        presenter.reproducirProducto(videoFileName)
+    fun onVideoSelected(videoFileName: String) {
+        presenter.ReproducirPresenter(videoFileName)
+    }
+    fun ReproducirPresenter(videoFileName: String) {
+        // Lógica para obtener la URL y llamar a la vista
+        val url = reproducirModel.obtenerUrlVideo(videoFileName)
+        view.mostrarVideoReproductor(url) // Esto llama al método del Contrato/Actividad
     }
     override fun onResume() {
         super.onResume()
