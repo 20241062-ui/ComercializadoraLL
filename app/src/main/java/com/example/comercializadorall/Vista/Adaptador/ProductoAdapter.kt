@@ -37,14 +37,13 @@ class ProductoAdaptador(val contexto: Context, val listaproductos:List<clsProduc
         val producto=listaproductos[position]
 
         holder.txtnombre.text = producto.vchNombre
-        holder.txtprecio.text = "Precio: $${producto.floPrecioUnitario}"
-
         Glide.with(contexto)
             .load("https://comercializadorall.grupoctic.com/ComercializadoraLL/Recursos/" + producto.vchImagen)
             .into(holder.imgproducto)
         holder.imgproducto.setOnClickListener {
             verDetalleProducto(producto)
         }
+        holder.txtprecio.text = "Precio: $${producto.floPrecioUnitario}"
     }
     fun verDetalleProducto(producto: clsProductos){
         val intent= Intent(contexto, VistaDetalle::class.java).apply{
