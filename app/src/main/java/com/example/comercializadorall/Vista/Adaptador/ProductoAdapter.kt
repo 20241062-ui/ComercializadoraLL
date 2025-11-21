@@ -21,9 +21,9 @@ class ProductoAdaptador(val contexto: Context, val listaproductos:List<clsProduc
 
     class ProductoViewHolder(control: View): RecyclerView.ViewHolder(control){ // Clase renombrada
         // IDs asumidos: imgFoto, txtNombre, txtDescripcion
-        val imgproducto: ImageView =control.findViewById(R.id.imgProducto)
+        var imgproducto: ImageView =control.findViewById(R.id.imgProducto)
         val txtnombre: TextView =control.findViewById(R.id.txtNombre)
-        val txtdescripcion: TextView =control.findViewById(R.id.txtPrecio)
+        val txtprecio: TextView =control.findViewById(R.id.txtPrecio)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductoViewHolder { // Clase renombrada
@@ -36,10 +36,9 @@ class ProductoAdaptador(val contexto: Context, val listaproductos:List<clsProduc
 
         val producto=listaproductos[position]
 
-        holder.txtnombre.text=producto.vchNombre // Campo actualizado
-        holder.txtdescripcion.text=producto.vchDescripcion // Campo actualizado
+        holder.txtnombre.text = producto.vchNombre
+        holder.txtprecio.text = "Precio: $${producto.floPrecioUnitario}"
 
-        // URL Base actualizada a Productos/img/
         Glide.with(contexto)
             .load("https://comercializadorall.grupoctic.com/ComercializadoraLL/Recursos/" + producto.vchImagen)
             .into(holder.imgproducto)

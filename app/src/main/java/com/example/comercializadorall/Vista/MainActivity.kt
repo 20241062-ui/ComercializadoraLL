@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity(), MainContract {
 
     // Componentes del reproductor
     private lateinit var playerView: PlayerView
-    private lateinit var exoPlayer: ExoPlayer // ¡IMPORTANTE!: No inicializar aquí si se hace en onCreate
+    private lateinit var exoPlayer: ExoPlayer
 
     // Modelo para la URL de video
     private val reproducirModel = ReproducirModel()

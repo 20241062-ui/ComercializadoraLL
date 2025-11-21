@@ -1,7 +1,7 @@
 package com.example.comercializadorall.Modelo
 
 data class clsProductos(
-    val vchNo_Serie:Int,
+    val vchNo_Serie:String,
     val intid_Marca:Int,
     val intid_Categoria:Int,
     val intid_Cobertura:Int,
@@ -11,5 +11,5 @@ data class clsProductos(
     val floPrecioUnitario:Float,
     val intStock:Int,
     val floPrecioCompra:Float,
-    val vchImagen:Int
+    val vchImagen:String
 )
