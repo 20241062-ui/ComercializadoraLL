@@ -5,31 +5,10 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Vista.MainActivity">
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcvProductos"
-        android:layout_width="389dp"
-        android:layout_height="439dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <androidx.media3.ui.PlayerView
-        android:id="@+id/playerView"
-        android:layout_width="270dp"
-        android:layout_height="126dp"
-        android:layout_marginBottom="8dp"
-        android:background="#000000"
-        app:layout_constraintBottom_toTopOf="@+id/rcvProductos"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:resize_mode="fit"
-        app:use_controller="true" />
+    tools:context=".InformaciondelaEmpresa">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
         android:layout_width="410dp"
         android:layout_height="119dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -97,5 +76,18 @@
                 tools:layout_editor_absoluteY="48dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="409dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/cardView"
+        tools:layout_editor_absoluteX="2dp" >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

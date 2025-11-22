@@ -9,27 +9,32 @@
 
     <EditText
         android:id="@+id/edtUsuario"
-        android:layout_width="208dp"
+        android:layout_width="275dp"
         android:layout_height="49dp"
-        android:layout_marginTop="144dp"
+        android:layout_marginTop="212dp"
         android:ems="10"
-        android:inputType="text"
-        android:text=""
         android:hint="Ingrese su correo aquí"
+        android:inputType="text"
+
+        android:background="@drawable/edittext_borde"
+        android:elevation="10dp"
+        android:paddingStart="12dp"
+
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/edtpassword"
-        android:layout_width="212dp"
-        android:layout_height="57dp"
-        android:layout_marginTop="112dp"
+        android:layout_width="274dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
-        android:inputType="text"
-        android:text=""
         android:hint="Ingrese su contraseña aquí"
+        android:inputType="text"
+        android:background="@drawable/edittext_borde"
+        android:elevation="10dp"
+        android:paddingStart="12dp"
         app:layout_constraintEnd_toEndOf="@+id/edtUsuario"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/edtUsuario"
@@ -37,10 +42,10 @@
 
     <Button
         android:id="@+id/btnAcceder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="270dp"
+        android:layout_height="51dp"
         android:layout_marginTop="68dp"
-        android:text="Iniciar Seción"
+        android:text="Continuar"
         app:layout_constraintEnd_toEndOf="@+id/edtpassword"
         app:layout_constraintStart_toStartOf="@+id/edtpassword"
         app:layout_constraintTop_toBottomOf="@+id/edtpassword" />
@@ -49,9 +54,22 @@
         android:id="@+id/txtRegistrar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
-        android:text="¿No tienes cuenta? ¡Regístrate!"
+        android:layout_marginTop="44dp"
+        android:text="@string/Registro"
         app:layout_constraintEnd_toEndOf="@+id/btnAcceder"
         app:layout_constraintStart_toStartOf="@+id/btnAcceder"
         app:layout_constraintTop_toBottomOf="@+id/btnAcceder" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="72dp"
+        android:text="Iniciar Sesión"
+        android:textSize="34sp"
+        android:textStyle="normal|bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

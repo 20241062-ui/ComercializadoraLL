@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity(), MainContract {
             insets
         }
 
-        // --- 1. Inicialización de Vistas ---
+
         rcvProductos = findViewById(R.id.rcvProductos)
         playerView = findViewById(R.id.playerView) // Inicialización de PlayerView
 
