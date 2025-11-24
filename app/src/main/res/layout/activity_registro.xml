@@ -7,6 +7,19 @@
     android:layout_height="match_parent"
     tools:context=".Vista.Registro">
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="88dp"
+        android:text="Registrate"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <EditText
         android:id="@+id/edtUNombre"
         android:layout_width="265dp"
@@ -15,7 +28,7 @@
         android:background="@drawable/edittext_borde"
         android:elevation="10dp"
         android:ems="10"
-        android:hint="Ingrese su nombre aquí"
+        android:hint="Ingrese su nombre"
         android:inputType="text"
         android:paddingStart="12dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,7 +44,7 @@
         android:background="@drawable/edittext_borde"
         android:elevation="10dp"
         android:ems="10"
-        android:hint="Ingrese su apellido aquí"
+        android:hint="Ingrese su apellido"
         android:inputType="text"
         android:paddingStart="12dp"
         app:layout_constraintEnd_toEndOf="@+id/edtUNombre"
@@ -47,51 +60,53 @@
         android:background="@drawable/edittext_borde"
         android:elevation="10dp"
         android:ems="10"
-        android:hint="Ingrese su correo aquí"
-        android:inputType="text"
+        android:hint="Ingrese su correo"
+        android:inputType="textEmailAddress"
         android:paddingStart="12dp"
         app:layout_constraintEnd_toEndOf="@+id/edtApellido"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/edtApellido"
         app:layout_constraintTop_toBottomOf="@+id/edtApellido" />
 
-    <EditText
-        android:id="@+id/edtPass"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_input_password_layout"
         android:layout_width="265dp"
-        android:layout_height="51dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="56dp"
-        android:background="@drawable/edittext_borde"
+
         android:elevation="10dp"
-        android:ems="10"
-        android:hint="Ingrese su contraseña aquí"
-        android:inputType="text"
-        android:paddingStart="12dp"
+
+        app:passwordToggleEnabled="true"
+
         app:layout_constraintEnd_toEndOf="@+id/edtCorreo"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/edtCorreo"
-        app:layout_constraintTop_toBottomOf="@+id/edtCorreo" />
+        app:layout_constraintTop_toBottomOf="@+id/edtCorreo">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtPass"
+            android:layout_width="match_parent"
+            android:layout_height="51dp"
+
+            android:background="@drawable/edittext_borde"
+            android:ems="10"
+            android:hint="Ingrese su contraseña"
+
+            android:inputType="textPassword"
+
+            android:paddingStart="12dp"
+            tools:ignore="RtlSymmetry" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btnRegistrar"
         android:layout_width="142dp"
         android:layout_height="59dp"
         android:layout_marginTop="64dp"
-        android:text="Registrar"
-        app:layout_constraintEnd_toEndOf="@+id/edtPass"
+        android:text="Registrarse"
+        app:layout_constraintEnd_toEndOf="@+id/text_input_password_layout"
         app:layout_constraintHorizontal_bias="0.441"
-        app:layout_constraintStart_toStartOf="@+id/edtPass"
-        app:layout_constraintTop_toBottomOf="@+id/edtPass" />
+        app:layout_constraintStart_toStartOf="@+id/text_input_password_layout"
+        app:layout_constraintTop_toBottomOf="@+id/text_input_password_layout" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
-        android:text="Registrate"
-        android:textSize="34sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

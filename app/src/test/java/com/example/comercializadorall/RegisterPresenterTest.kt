@@ -1,12 +1,12 @@
 package com.example.comercializadorall
-import com.example.comercializadorall.Modelo.RegistroModel // Asegúrate de tener este modelo
-import com.example.comercializadorall.Presentador.RegistroPresenter // Asegúrate de tener este Presenter
+import com.example.comercializadorall.Modelo.RegistroModel
+import com.example.comercializadorall.Presentador.RegistroPresenter
 import com.example.comercializadorall.Vista.Contracts.RegistroContract
-import com.example.comercializadorall.Vista.clsDatosRespuesta // Usaremos la misma clase de respuesta
+
 
 import org.junit.Before
 import org.junit.Test
-import org.mockito.kotlin.* // Importaciones de Mockito-Kotlin
+import org.mockito.kotlin.*
 
 class RegistroPresenterTest {
 
@@ -22,12 +22,8 @@ class RegistroPresenterTest {
         presenter = RegistroPresenter(mockVista, mockModel)
     }
 
-    // ----------------------------------------------------------------------
-    // --- CASO 1: Registro Exitoso (El Model llama a onSuccess) ---
-    // ----------------------------------------------------------------------
     @Test
     fun registro_successfulModelResponse_showsMessageAndNavigates() {
-        // ARRANGE
         val expectedMessage = "Usuario registrado con éxito."
         val fixedRol = "Cliente"
 

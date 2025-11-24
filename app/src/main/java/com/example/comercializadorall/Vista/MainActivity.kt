@@ -31,6 +31,8 @@ class MainActivity : AppCompatActivity(), MainContract {
     // Componentes del reproductor
     private lateinit var playerView: PlayerView
     private lateinit var exoPlayer: ExoPlayer
+    private lateinit var imgPerfil:ImageView
+
 
     // Modelo para la URL de video
     private val reproducirModel = ReproducirModel()

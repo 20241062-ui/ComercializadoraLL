@@ -38,6 +38,7 @@ class ProductoAdaptador(val contexto: Context, val listaproductos:List<ProductoV
         // La URL ya está completa y lista
         Glide.with(contexto).load(producto.urlImagenCompleta).fitCenter().into(holder.imgproducto)
     }
+
     fun verDetalleProducto(producto: clsProductos){
         val intent= Intent(contexto, VistaDetalle::class.java).apply{
             // Usamos las claves de producto correctas
