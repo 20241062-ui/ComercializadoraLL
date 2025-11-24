@@ -4,7 +4,7 @@ import com.example.comercializadorall.Vista.Contracts.ReproducirContract // Cont
 import com.example.comercializadorall.Modelo.ReproducirModel
 
 
-class ReproducirVideoProductoPresenter(val vista: ReproducirContract) { // Clase renombrada
+class ReproducirPresenter(val vista: ReproducirContract) { // Clase renombrada
     private val modelo = ReproducirModel()
 
     fun cargarVideo(nombreArchivoVideo: String) { // Renombrado

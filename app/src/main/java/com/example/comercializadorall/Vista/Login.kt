@@ -10,6 +10,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.comercializadorall.Modelo.LoginModel
 import com.example.comercializadorall.Presentador.LoginPresenter
 import com.example.comercializadorall.R
 import com.example.comercializadorall.Vista.Contracts.LoginContract
@@ -34,7 +35,10 @@ class Login : AppCompatActivity(), LoginContract {
         btnAcceder = findViewById(R.id.btnAcceder)
         tvRegistrar = findViewById(R.id.txtRegistrar)
 
-        presentador = LoginPresenter(this)
+
+        val model = LoginModel()
+
+        val presentador = LoginPresenter(this, model)
 
         btnAcceder.setOnClickListener {
             val correo = etCorreo.text.toString() // Variable renombrada

@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ComercializadoraLL">
         <activity
-            android:name=".InformaciondelaEmpresa"
+            android:name=".Vista.InformaciondelaEmpresa"
             android:exported="false" />
         <activity
             android:name=".Vista.Registro"

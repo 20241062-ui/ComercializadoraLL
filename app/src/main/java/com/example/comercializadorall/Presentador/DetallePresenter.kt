@@ -3,7 +3,7 @@ package com.example.comercializadorall.Presentador
 import com.example.comercializadorall.Modelo.DetalleModel // Modelo de detalle actualizado
 import com.example.comercializadorall.Vista.Contracts.DetalleContract // Contrato actualizado
 
-class DetalleProductoPresenter(private val vista: DetalleContract) { // Clase renombrada y contrato actualizado
+class DetallePresenter(private val vista: DetalleContract) { // Clase renombrada y contrato actualizado
 
     fun cargarDatos(intentExtras: Map<String, String?>) {
         // Mapeo de claves de Intent actualizadas de 'pelicula_' a 'producto_'

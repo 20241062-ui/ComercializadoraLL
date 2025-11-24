@@ -3,10 +3,10 @@ package com.example.comercializadorall.Presentador
 import com.example.comercializadorall.Modelo.LoginModel
 import com.example.comercializadorall.Vista.Contracts.LoginContract // Contrato actualizado
 
-class LoginPresenter(private val vista: LoginContract) { // Contrato actualizado
-    private val model = LoginModel()
+class LoginPresenter(
+    private val vista: LoginContract, private val model: LoginModel) {
 
-    fun iniciarSesion(correo: String, password: String) { // Renombrado de email a correo (consistencia con API)
+    fun iniciarSesion(correo: String, password: String) {
         if (correo.isEmpty() || password.isEmpty()) {
             vista.mostrarMensaje("Debe llenar todos los campos")
             return

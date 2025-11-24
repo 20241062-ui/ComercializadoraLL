@@ -10,7 +10,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.comercializadorall.Modelo.RegistroModel
 import com.example.comercializadorall.Modelo.ifaceApiService // Interfaz actualizada
-import com.example.comercializadorall.Presentador.RegistrPresenter
+import com.example.comercializadorall.Presentador.RegistroPresenter
 import com.example.comercializadorall.R
 import com.example.comercializadorall.Vista.Contracts.RegistroContract // Contrato actualizado
 import com.google.gson.GsonBuilder
@@ -26,7 +26,7 @@ class Registro : AppCompatActivity(), RegistroContract {
         lateinit var etCorreo: EditText // Renombrado de etEmail
         lateinit var etPasswordRegistro: EditText
         lateinit var btnRegistrar: Button
-        lateinit var presentador: RegistrPresenter
+        lateinit var presentador: RegistroPresenter
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_registro)
@@ -53,7 +53,7 @@ class Registro : AppCompatActivity(), RegistroContract {
 
         val apiService = retrofit.create(ifaceApiService::class.java) // Interfaz actualizada
         val model = RegistroModel(apiService)
-        presentador = RegistrPresenter(this, model)
+        presentador = RegistroPresenter(this, model)
 
         btnRegistrar.setOnClickListener {
             val nombre = etNombre.text.toString()
@@ -70,5 +70,9 @@ class Registro : AppCompatActivity(), RegistroContract {
 
     override fun registroExitoso() {
         finish()
+    }
+
+    override fun navegarALogin() {
+        TODO("Not yet implemented")
     }
 }
