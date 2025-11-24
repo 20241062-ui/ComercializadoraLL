@@ -1,6 +1,5 @@
 package com.example.comercializadorall.Presentador
 
-import com.example.comercializadorall.Modelo.ReproducirModel
 import com.example.comercializadorall.Modelo.clsProductos // Modelo actualizado
 import com.example.comercializadorall.Vista.Contracts.MainContract // Contrato actualizado
 import com.example.comercializadorall.Modelo.ifaceApiService // Interfaz de servicio actualizada
@@ -10,6 +9,9 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+
+
+
 
 class MainPresenter(private val view: MainContract) { // Contrato actualizado
 
@@ -26,12 +28,15 @@ class MainPresenter(private val view: MainContract) { // Contrato actualizado
         apiService = retrofit.create(ifaceApiService::class.java)
     }
 
-    fun obtenerProductos() { // Método renombrado
+    fun obtenerProductos() {
         apiService.obtenerProductos().enqueue(object : Callback<List<clsProductos>> { // Tipos actualizados
             override fun onResponse(call: Call<List<clsProductos>>, response: Response<List<clsProductos>>) {
                 if (response.isSuccessful) {
-                    response.body()?.let { productos ->
-                        view.mostrarProductos(productos) // Método de vista actualizado
+                    response.body()?.let { productos: List<clsProductos> ->
+                        val listaParaUI = productos.map { it.toProductoVista() }
+
+                        // 2. Llamar a la Vista con la LISTA LIMPIA
+                        view.mostrarProductos(listaParaUI)
                     } ?: run {
                         view.mostrarError("Error: ${response.message()}")
                     }

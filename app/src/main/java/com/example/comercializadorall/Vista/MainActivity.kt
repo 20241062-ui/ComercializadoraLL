@@ -18,6 +18,7 @@ import androidx.media3.common.MediaItem // Necesario para ExoPlayer
 import androidx.media3.exoplayer.ExoPlayer // Necesario para ExoPlayer
 import androidx.media3.ui.PlayerView // Necesario para la vista del reproductor
 import com.example.comercializadorall.Modelo.ReproducirModel
+import com.example.comercializadorall.Presentador.ProductoVista
 import com.example.comercializadorall.Vista.Adaptador.ProductoAdaptador
 
 
@@ -80,7 +81,7 @@ class MainActivity : AppCompatActivity(), MainContract {
         exoPlayer.playWhenReady = true
     }
 
-    override fun mostrarProductos(productos: List<clsProductos>) {
+    override fun mostrarProductos(productos: List<ProductoVista>) {
         val adaptador = ProductoAdaptador(this, productos)
         rcvProductos.adapter = adaptador
     }

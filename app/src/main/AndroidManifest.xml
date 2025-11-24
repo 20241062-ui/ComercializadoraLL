@@ -13,6 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ComercializadoraLL">
+
         <activity
             android:name=".Vista.InformaciondelaEmpresa"
             android:exported="false" />
@@ -25,9 +26,7 @@
         <activity
             android:name=".Vista.VistaDetalle"
             android:exported="false" />
-        <activity
-            android:name=".Vista.producto_layout"
-            android:exported="false" />
+
         <activity
             android:name=".Vista.MainActivity"
             android:exported="true">
