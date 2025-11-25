@@ -14,12 +14,13 @@ import com.example.comercializadorall.Presentador.ProductoVista
 import com.example.comercializadorall.R
 import com.example.comercializadorall.Vista.VistaDetalle
 
-class ProductoAdaptador(val contexto: Context, val listaproductos:List<ProductoVista>): RecyclerView.Adapter<ProductoAdaptador.ProductoViewHolder>() { // Clases renombradas
+class ProductoAdaptador(val contexto: Context, val listaproductos: List<clsProductos>) : RecyclerView.Adapter<ProductoAdaptador.ProductoViewHolder>() {
 
     class ProductoViewHolder(control: View): RecyclerView.ViewHolder(control){
         val txtnombre: TextView =control.findViewById(R.id.txtNombre)
         var imgproducto: ImageView =control.findViewById(R.id.imgProducto)
         val txtprecio: TextView =control.findViewById(R.id.txtPrecio)
+        val itemViewControl: View = control
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductoViewHolder { // Clase renombrada
@@ -28,14 +29,12 @@ class ProductoAdaptador(val contexto: Context, val listaproductos:List<ProductoV
         return ProductoViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ProductoViewHolder,position: Int) { // Clase renombrada
+    override fun onBindViewHolder(holder: ProductoViewHolder, position: Int) {
+        val producto = listaproductos[position]
 
-        val producto=listaproductos[position]
-
-        holder.txtnombre.text = producto.nombreDisplay // Nombre formateado para mostrar
-        holder.txtprecio.text = producto.precioFormatted // Precio ya formateado
-
-        // La URL ya está completa y lista
+        // **Actualiza el acceso a las propiedades**
+        holder.txtnombre.text = producto.vchNombre // Ya no es .nombreDisplay
+        holder.txtprecio.text = "$ ${String.format("%.2f", producto.floPrecioUnitario)}"
         Glide.with(contexto).load(producto.urlImagenCompleta).fitCenter().into(holder.imgproducto)
     }
 
