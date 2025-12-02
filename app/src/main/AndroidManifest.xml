@@ -20,9 +20,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ComercializadoraLL"
         android:usesCleartextTraffic="true">
-        <activity
-            android:name=".Categorias"
-            android:exported="false" />
 
         <service
             android:name=".Modelo.MyFirebaseMessagingService"
