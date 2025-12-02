@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ComercializadoraLL</string>
+    <string name="Registro">¿No tienes una cuenta? <u>Registrarse</u></string>
 </resources>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fondo_suave"
+    tools:context=".Vista.Registro">
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="171dp"
+        android:layout_height="104dp"
+        android:layout_marginTop="108dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/blacklogo" />
+
+    <Button
+        android:id="@+id/btnRegistrar"
+        android:layout_width="262dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="16dp"
+        android:text="Registrarse"
+        app:layout_constraintEnd_toEndOf="@+id/text_input_password_layout"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/text_input_password_layout"
+        app:layout_constraintTop_toBottomOf="@+id/text_input_password_layout" />
+
+    <EditText
+        android:id="@+id/edtUNombre"
+        android:layout_width="265dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="296dp"
+        android:background="@drawable/edittext_borde"
+        android:elevation="10dp"
+        android:ems="10"
+        android:hint="Ingrese su nombre"
+        android:inputType="text"
+        android:paddingStart="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/edtCorreo"
+        android:layout_width="265dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/edittext_borde"
+        android:elevation="10dp"
+        android:ems="10"
+        android:hint="Ingrese su correo"
+        android:inputType="textEmailAddress"
+        android:paddingStart="12dp"
+        app:layout_constraintEnd_toEndOf="@+id/edtApellido"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/edtApellido"
+        app:layout_constraintTop_toBottomOf="@+id/edtApellido" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_input_password_layout"
+        android:layout_width="265dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+
+        android:elevation="10dp"
+
+        app:layout_constraintEnd_toEndOf="@+id/edtCorreo"
+
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/edtCorreo"
+        app:layout_constraintTop_toBottomOf="@+id/edtCorreo"
+        app:passwordToggleEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtPass"
+            android:layout_width="match_parent"
+            android:layout_height="51dp"
+
+            android:background="@drawable/edittext_borde"
+            android:ems="10"
+            android:hint="Ingrese su contraseña"
+
+            android:inputType="textPassword"
+
+            android:paddingStart="12dp"
+            tools:ignore="RtlSymmetry" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <EditText
+        android:id="@+id/edtApellido"
+        android:layout_width="265dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/edittext_borde"
+        android:elevation="10dp"
+        android:ems="10"
+        android:hint="Ingrese su apellido"
+        android:inputType="text"
+        android:paddingStart="12dp"
+        app:layout_constraintEnd_toEndOf="@+id/edtUNombre"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/edtUNombre"
+        app:layout_constraintTop_toBottomOf="@+id/edtUNombre" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Crea tu cuenta"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
