@@ -10,121 +10,114 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="409dp"
         android:layout_height="622dp"
+        android:background="@color/fondo_suave"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/fondo_suave">
-
-        <TextView
-            android:id="@+id/txtNombre"
-            android:layout_width="160dp"
-            android:layout_height="37dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/rounded_background"
-            android:elevation="4dp"
-            android:gravity="top"
-            android:padding="10dp"
-            android:text="Nombre del producto"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/txtImagen"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="309dp"
+            android:layout_height="237dp"
             android:layout_marginTop="12dp"
             android:background="@drawable/rounded_background"
             android:elevation="4dp"
             android:gravity="center"
             android:padding="12dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintHorizontal_bias="0.293"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtNombre"
             app:srcCompat="@drawable/blacklogo" />
 
         <TextView
+            android:id="@+id/txtmarca"
+            android:layout_width="117dp"
+            android:layout_height="47dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/rounded_background"
+            android:elevation="4dp"
+            android:gravity="top"
+            android:padding="12dp"
+            android:text="Marca"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtNombre"
+            android:layout_width="234dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rounded_background"
+            android:elevation="4dp"
+            android:gravity="top"
+            android:padding="10dp"
+            android:text="Nombre del producto"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.171"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtmarca" />
+
+        <TextView
+            android:id="@+id/txtPrecio"
+            android:layout_width="199dp"
+            android:layout_height="47dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/rounded_background"
+            android:elevation="4dp"
+            android:gravity="top"
+            android:padding="12dp"
+            android:text="Precio del producto"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="#265D28"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.157"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtImagen" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="211dp"
+            android:layout_height="51dp"
+            android:layout_marginTop="12dp"
+            android:text="Comprar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.161"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtDescripcion" />
+
+        <TextView
             android:id="@+id/txtDescripcion"
-            android:layout_width="285dp"
-            android:layout_height="149dp"
+            android:layout_width="295dp"
+            android:layout_height="71dp"
             android:layout_marginTop="12dp"
             android:background="@drawable/rounded_background"
             android:elevation="4dp"
             android:gravity="top"
             android:padding="12dp"
             android:text="Descripcion del producto"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.289"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtImagen" />
-
-        <TextView
-            android:id="@+id/txtPrecio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/rounded_background"
-            android:elevation="4dp"
-            android:gravity="top"
-            android:padding="12dp"
-            android:text="Precio del producto"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtDescripcion" />
+            app:layout_constraintTop_toBottomOf="@+id/txtPrecio" />
 
         <TextView
             android:id="@+id/txtStock"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_width="135dp"
+            android:layout_height="47dp"
+            android:layout_marginTop="12dp"
             android:background="@drawable/rounded_background"
             android:elevation="4dp"
             android:gravity="top"
             android:padding="12dp"
             android:text="Cantidad disponible(Stock)"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtPrecio" />
-
-        <TextView
-            android:id="@+id/txtmarca"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/rounded_background"
-            android:elevation="4dp"
-            android:gravity="top"
-            android:padding="12dp"
-            android:text="Marca"
-            app:layout_constraintEnd_toStartOf="@+id/txtCobertura"
-            app:layout_constraintHorizontal_bias="0.32"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtStock" />
-
-        <TextView
-            android:id="@+id/txtCobertura"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="72dp"
-            android:background="@drawable/rounded_background"
-            android:elevation="4dp"
-            android:gravity="top"
-            android:padding="12dp"
-            android:text="Cobertura"
-            app:layout_constraintBottom_toBottomOf="@+id/txtmarca"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/txtmarca" />
-
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Comprar"
-            tools:layout_editor_absoluteX="143dp"
-            tools:layout_editor_absoluteY="564dp" />
+            app:layout_constraintHorizontal_bias="0.268"
+            app:layout_constraintStart_toEndOf="@+id/txtPrecio"
+            app:layout_constraintTop_toBottomOf="@+id/txtImagen" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
