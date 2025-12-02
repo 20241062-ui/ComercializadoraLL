@@ -36,6 +36,4 @@ filament-android = { group = "com.google.ar.sceneform", name = "filament-android
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-
-# 💡 Plugin de Google Services
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
