@@ -73,7 +73,7 @@
                 app:srcCompat="@drawable/categoryicon" />
 
             <ImageView
-                android:id="@+id/imgPerfil"
+                android:id="@+id/imgInfo"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="25dp"
@@ -101,7 +101,7 @@
                 android:layout_height="50dp"
                 android:layout_marginStart="25dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imgPerfil"
+                app:layout_constraintStart_toEndOf="@+id/imgInfo"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.485"
                 app:srcCompat="@drawable/profileicon"
