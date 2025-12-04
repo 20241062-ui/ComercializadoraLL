@@ -68,36 +68,4 @@ class MainPresenter(private val view: MainContract) { // Contrato actualizado
             }
         })
     }
-    /*fun buscarProductoPorCodigo(codigo: String) {
-        view.mostrarCargando(true) // Asumo que tienes una función para mostrar carga
-
-        // 🚨 PASO 1: Llama a la API con el código de producto (vchNo_Serie)
-        apiService.obtenerProductoPorCodigo(codigo).enqueue(object : Callback<clsProductos> {
-
-            override fun onResponse(call: Call<clsProductos>, response: Response<clsProductos>) {
-                view.mostrarCargando(false)
-
-                if (response.isSuccessful) {
-                    val producto = response.body()
-
-                    if (producto != null) {
-                        // 💡 ÉXITO: El Presenter le indica a la View (MainActivity) que navegue
-                        view.mostrarDetalleProductoDirecto(producto)
-                    } else {
-                        view.mostrarError("Producto con código $codigo no encontrado.")
-                    }
-                } else {
-                    // Error 404, 500, etc.
-                    Log.e("API_SEARCH", "Error ${response.code()}: ${response.message()}")
-                    view.mostrarError("Error ${response.code()} al buscar el producto.")
-                }
-            }
-
-            override fun onFailure(call: Call<clsProductos>, t: Throwable) {
-                view.mostrarCargando(false)
-                Log.e("API_SEARCH", "Fallo de conexión o deserialización: ${t.message}", t)
-                view.mostrarError("Error de red al buscar el producto.")
-            }
-        })
-    }*/
 }

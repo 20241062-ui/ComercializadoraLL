@@ -1,7 +1,6 @@
 package com.example.comercializadorall.Vista.Adaptador
 
 import android.content.Context
-import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,15 +10,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.comercializadorall.Modelo.clsProductos
+import com.example.comercializadorall.Presentador.ProductoVista
 import com.example.comercializadorall.R
-import com.example.comercializadorall.Vista.VistaDetalle
 
-// 💡 CAMBIO CLAVE: El constructor ahora recibe una lambda (función)
-// que se ejecutará cuando se haga clic en la imagen.
+
 class ProductoAdaptador(
     private val contexto: Context,
     private val listaproductos: List<clsProductos>,
-    private val onImageClickListener: (clsProductos) -> Unit // Lambda para manejar el clic
+    private val onImageClickListener: (clsProductos) -> Unit
 ) : RecyclerView.Adapter<ProductoAdaptador.ProductoViewHolder>() {
 
     // --- ViewHolder ---
@@ -37,7 +35,7 @@ class ProductoAdaptador(
 
     // --- onBindViewHolder ---
     override fun onBindViewHolder(holder: ProductoViewHolder, position: Int) {
-        val producto = listaproductos[position]
+        val producto: clsProductos = listaproductos[position]
 
         // --- Lógica de URL y GLIDE ---
         val URL_BASE_IMAGENES = "http://comercializadorall.grupoctic.com/ComercializadoraLL/img/"
@@ -54,15 +52,10 @@ class ProductoAdaptador(
             .fitCenter()
             .into(holder.imgproducto)
 
-        // --- Lógica de Click en la IMAGEN ---
-        // 💡 PASO CLAVE: Asignar el listener SÓLO al ImageView
         holder.imgproducto.setOnClickListener {
             // Cuando se hace clic en la imagen, invocamos la lambda y pasamos el producto.
             onImageClickListener(producto)
         }
-
-        // Opcional: Si no quieres que toda la tarjeta sea clickeable,
-        // asegúrate de NO llamar a setOnClickListener en holder.itemView.
     }
 
     // --- getItemCount ---

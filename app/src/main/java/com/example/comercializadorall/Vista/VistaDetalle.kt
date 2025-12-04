@@ -1,5 +1,6 @@
 package com.example.comercializadorall.Vista
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
@@ -34,9 +35,39 @@ class VistaDetalle : AppCompatActivity() {
         txtStock=findViewById(R.id.txtStock)
         imgProducto=findViewById(R.id.txtImagen)
         txtmarca=findViewById(R.id.txtmarca)
-        txtCobertura=findViewById(R.id.txtCobertura)
 
         cargarDatosProducto()
+        val openLoginImage: ImageView = findViewById(R.id.imgPerfil)
+        val imgInfo: ImageView = findViewById(R.id.imgInfo)
+        val imgInicio: ImageView = findViewById(R.id.imgInicio)
+        val imgCategorias: ImageView = findViewById(R.id.imgCategorias)
+        val imgEmpresa: ImageView = findViewById(R.id.imgEmpresa)
+        openLoginImage.setOnClickListener {
+            val intent = Intent(this, Login::class.java)
+            startActivity(intent)
+        }
+        imgEmpresa.setOnClickListener {
+            val intent = Intent(this, InformaciondelaEmpresa::class.java)
+            startActivity(intent)
+        }
+        imgInicio.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+        imgInfo.setOnClickListener {
+            // **NOTA:** Reemplaza 'ActivityInfo' con el nombre de tu Activity real
+            // cuando la hayas creado.
+            // val intent = Intent(this, ActivityInfo::class.java)
+            // startActivity(intent)
+        }
+
+        // Evento para imgCategorias (Activity pendiente)
+        imgCategorias.setOnClickListener {
+            // **NOTA:** Reemplaza 'ActivityCategorias' con el nombre de tu Activity real
+            // cuando la hayas creado.
+            // val intent = Intent(this, ActivityCategorias::class.java)
+            // startActivity(intent)
+        }
     }
 
     private fun cargarDatosProducto() {
@@ -48,8 +79,6 @@ class VistaDetalle : AppCompatActivity() {
         val descripcion = intent.getStringExtra("producto_descripcion")
         val imagenUrl = intent.getStringExtra("producto_imagen")
         val marca = intent.getStringExtra("producto_marca")
-        val cobertura=intent.getStringExtra("producto_cobertura")
-        // Los tipos Double e Int requieren métodos de recuperación específicos y un valor por defecto
         val precio = intent.getFloatExtra("producto_precio", 0.0f)
         val stock = intent.getIntExtra("producto_stock", 0)
         // 3. 🚨 Asignar los datos a las Vistas
@@ -64,11 +93,6 @@ class VistaDetalle : AppCompatActivity() {
 
         // ImageView (Carga con Glide)
         if (imagenUrl != null) {
-            // Debes reconstruir la URL base aquí también, si es necesario,
-            // o asegurarte de que lo que se pasó en el Intent fue la URL completa.
-
-            // ASUMIMOS que el intent de MainActivity YA ENVIÓ la URL completa.
-            // Si no, debes añadir aquí la URL base de tu servidor:
             val URL_BASE_IMAGENES = "http://comercializadorall.grupoctic.com/ComercializadoraLL/img/"
             val urlCompleta = URL_BASE_IMAGENES + imagenUrl
 
@@ -77,6 +101,5 @@ class VistaDetalle : AppCompatActivity() {
                 .into(imgProducto)
             }
         txtmarca.text = "Marca: $marca"
-        txtCobertura.text = "Cobertura: $cobertura"
         }
     }

@@ -148,7 +148,7 @@
             android:background="#1A1212">
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/imgEmpresa"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="25dp"
@@ -160,45 +160,45 @@
                 tools:srcCompat="@drawable/whitelogo" />
 
             <ImageView
-                android:id="@+id/imgPrefil"
+                android:id="@+id/imgPerfil"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="25dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView7"
+                app:layout_constraintStart_toEndOf="@+id/imgInfo"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.514"
+                app:layout_constraintVertical_bias="0.485"
                 tools:srcCompat="@drawable/profileicon" />
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/imgInicio"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="25dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView6"
+                app:layout_constraintStart_toEndOf="@+id/imgCategorias"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.485"
                 app:srcCompat="@drawable/homeicon1" />
 
             <ImageView
-                android:id="@+id/imageView6"
+                android:id="@+id/imgCategorias"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="25dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintStart_toEndOf="@+id/imgEmpresa"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.485"
                 app:srcCompat="@drawable/categoryicon" />
 
             <ImageView
-                android:id="@+id/imageView7"
+                android:id="@+id/imgInfo"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="25dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView2"
+                app:layout_constraintStart_toEndOf="@+id/imgInicio"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.514"
                 app:srcCompat="@drawable/abouticon" />
