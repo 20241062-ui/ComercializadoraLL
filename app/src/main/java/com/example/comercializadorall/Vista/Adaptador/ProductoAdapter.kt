@@ -35,7 +35,7 @@ class ProductoAdaptador(
 
     // --- onBindViewHolder ---
     override fun onBindViewHolder(holder: ProductoViewHolder, position: Int) {
-        val producto: ProductoVista = listaproductos[position]
+        val producto: clsProductos = listaproductos[position]
 
         // --- Lógica de URL y GLIDE ---
         val URL_BASE_IMAGENES = "http://comercializadorall.grupoctic.com/ComercializadoraLL/img/"
