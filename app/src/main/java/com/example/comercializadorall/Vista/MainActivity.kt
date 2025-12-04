@@ -1,6 +1,5 @@
 package com.example.comercializadorall.Vista
 
-import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -15,7 +14,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.comercializadorall.Modelo.clsProductos
 import com.example.comercializadorall.Presentador.MainPresenter
 import com.example.comercializadorall.R
 import com.example.comercializadorall.Vista.Contracts.MainContract
@@ -23,6 +21,7 @@ import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
 import com.example.comercializadorall.Modelo.ReproducirModel
+import com.example.comercializadorall.Presentador.ProductoVista
 import com.example.comercializadorall.Vista.Adaptador.ProductoAdaptador
 
 class MainActivity : AppCompatActivity(), MainContract {
@@ -79,10 +78,36 @@ class MainActivity : AppCompatActivity(), MainContract {
         presenter.obtenerProductos()
 
         iniciarReproductorVideoFijo()
-        val openLoginImage: ImageView = findViewById(R.id.imgPrefil)
+        val openLoginImage: ImageView = findViewById(R.id.img)
+        val imgInfo: ImageView = findViewById(R.id.img)
+        val imgInicio: ImageView = findViewById(R.id.imgInicio)
+        val imgCategorias: ImageView = findViewById(R.id.imgCategorias)
+        val imgEmpresa: ImageView = findViewById(R.id.imgEmpresa)
         openLoginImage.setOnClickListener {
             val intent = Intent(this, Login::class.java)
             startActivity(intent)
+        }
+        imgEmpresa.setOnClickListener {
+            val intent = Intent(this, InformaciondelaEmpresa::class.java)
+            startActivity(intent)
+        }
+        imgInicio.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+        imgInfo.setOnClickListener {
+            // **NOTA:** Reemplaza 'ActivityInfo' con el nombre de tu Activity real
+            // cuando la hayas creado.
+            // val intent = Intent(this, ActivityInfo::class.java)
+            // startActivity(intent)
+        }
+
+        // Evento para imgCategorias (Activity pendiente)
+        imgCategorias.setOnClickListener {
+            // **NOTA:** Reemplaza 'ActivityCategorias' con el nombre de tu Activity real
+            // cuando la hayas creado.
+            // val intent = Intent(this, ActivityCategorias::class.java)
+            // startActivity(intent)
         }
 
     }
@@ -101,7 +126,7 @@ class MainActivity : AppCompatActivity(), MainContract {
     }
 
     // 💡 MÉTODO REFACTORIZADO: Aquí se inicializa el Adaptador con la lógica de click.
-    override fun mostrarProductos(productos: List<clsProductos>) {
+    override fun mostrarProductos(productos: List<ProductoVista>) {
 
         // 1. Crear el Adaptador, proporcionando la lógica de click como el tercer argumento (lambda).
         val adaptador = ProductoAdaptador(
