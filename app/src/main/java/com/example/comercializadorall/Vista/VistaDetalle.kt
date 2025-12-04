@@ -37,8 +37,8 @@ class VistaDetalle : AppCompatActivity() {
         txtmarca=findViewById(R.id.txtmarca)
 
         cargarDatosProducto()
-        val openLoginImage: ImageView = findViewById(R.id.img)
-        val imgInfo: ImageView = findViewById(R.id.img)
+        val openLoginImage: ImageView = findViewById(R.id.imgPerfil)
+        val imgInfo: ImageView = findViewById(R.id.imgInfo)
         val imgInicio: ImageView = findViewById(R.id.imgInicio)
         val imgCategorias: ImageView = findViewById(R.id.imgCategorias)
         val imgEmpresa: ImageView = findViewById(R.id.imgEmpresa)

@@ -21,7 +21,7 @@ import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
 import com.example.comercializadorall.Modelo.ReproducirModel
-import com.example.comercializadorall.Presentador.ProductoVista
+import com.example.comercializadorall.Modelo.clsProductos
 import com.example.comercializadorall.Vista.Adaptador.ProductoAdaptador
 
 class MainActivity : AppCompatActivity(), MainContract {
@@ -78,8 +78,8 @@ class MainActivity : AppCompatActivity(), MainContract {
         presenter.obtenerProductos()
 
         iniciarReproductorVideoFijo()
-        val openLoginImage: ImageView = findViewById(R.id.img)
-        val imgInfo: ImageView = findViewById(R.id.img)
+        val openLoginImage: ImageView = findViewById(R.id.imgPerfil)
+        val imgInfo: ImageView = findViewById(R.id.imgInfo)
         val imgInicio: ImageView = findViewById(R.id.imgInicio)
         val imgCategorias: ImageView = findViewById(R.id.imgCategorias)
         val imgEmpresa: ImageView = findViewById(R.id.imgEmpresa)
@@ -126,7 +126,7 @@ class MainActivity : AppCompatActivity(), MainContract {
     }
 
     // 💡 MÉTODO REFACTORIZADO: Aquí se inicializa el Adaptador con la lógica de click.
-    override fun mostrarProductos(productos: List<ProductoVista>) {
+    override fun mostrarProductos(productos: List<clsProductos>) {
 
         // 1. Crear el Adaptador, proporcionando la lógica de click como el tercer argumento (lambda).
         val adaptador = ProductoAdaptador(

@@ -16,7 +16,7 @@ import com.example.comercializadorall.R
 
 class ProductoAdaptador(
     private val contexto: Context,
-    private val listaproductos: List<ProductoVista>,
+    private val listaproductos: List<clsProductos>,
     private val onImageClickListener: (clsProductos) -> Unit
 ) : RecyclerView.Adapter<ProductoAdaptador.ProductoViewHolder>() {
 
@@ -35,7 +35,7 @@ class ProductoAdaptador(
 
     // --- onBindViewHolder ---
     override fun onBindViewHolder(holder: ProductoViewHolder, position: Int) {
-        val producto = listaproductos[position]
+        val producto: ProductoVista = listaproductos[position]
 
         // --- Lógica de URL y GLIDE ---
         val URL_BASE_IMAGENES = "http://comercializadorall.grupoctic.com/ComercializadoraLL/img/"
