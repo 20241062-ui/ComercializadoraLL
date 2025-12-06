@@ -4,111 +4,66 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".activity_kart">
-
-    <ImageView
-        android:id="@+id/imageView15"
-        android:layout_width="102dp"
-        android:layout_height="104dp"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="150dp"
-        tools:srcCompat="@tools:sample/avatars" />
-
-    <TextView
-        android:id="@+id/textView15"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Marca del producto"
-        tools:layout_editor_absoluteX="135dp"
-        tools:layout_editor_absoluteY="182dp" />
-
-    <TextView
-        android:id="@+id/textView16"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="$0000"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="#095F2C"
-        android:textStyle="bold"
-        tools:layout_editor_absoluteX="135dp"
-        tools:layout_editor_absoluteY="224dp" />
-
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="60dp"
-        android:layout_height="63dp"
-        app:circularflow_radiusInDP="0"
-        app:cornerRadius="@dimen/material_emphasis_medium"
-        app:icon="@android:drawable/ic_menu_delete"
-        app:iconSize="@dimen/material_emphasis_medium"
-        app:iconTint="#FFFFFF"
-        tools:layout_editor_absoluteX="335dp"
-        tools:layout_editor_absoluteY="174dp" />
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nombre del producto"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        tools:layout_editor_absoluteX="135dp"
-        tools:layout_editor_absoluteY="150dp" />
 
     <ImageView
         android:id="@+id/imageView14"
         android:layout_width="102dp"
         android:layout_height="104dp"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/txtMarca"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
         android:text="Marca del producto"
-        tools:layout_editor_absoluteX="135dp"
-        tools:layout_editor_absoluteY="56dp" />
+        app:layout_constraintStart_toEndOf="@+id/imageView14"
+        app:layout_constraintTop_toBottomOf="@+id/txtProducto" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/txtPrecio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:text="$0000"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#095F2C"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="135dp"
-        tools:layout_editor_absoluteY="98dp" />
+        app:layout_constraintStart_toEndOf="@+id/imageView14"
+        app:layout_constraintTop_toBottomOf="@+id/txtMarca" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/txtProducto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:text="Nombre del producto"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        tools:layout_editor_absoluteX="135dp"
-        tools:layout_editor_absoluteY="24dp" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="135dp" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnEliminar"
         android:layout_width="60dp"
         android:layout_height="63dp"
+        android:layout_marginStart="79dp"
+        android:layout_marginEnd="17dp"
         app:circularflow_radiusInDP="0"
         app:cornerRadius="@dimen/material_emphasis_medium"
         app:icon="@android:drawable/ic_menu_delete"
         app:iconSize="@dimen/material_emphasis_medium"
         app:iconTint="#FFFFFF"
-        tools:layout_editor_absoluteX="335dp"
-        tools:layout_editor_absoluteY="48dp" />
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="363dp"
-        android:layout_height="54dp"
-        android:text="Finalizar compra"
-        tools:layout_editor_absoluteX="22dp"
-        tools:layout_editor_absoluteY="645dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txtMarca"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

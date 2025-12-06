@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity(), MainContract {
             val intent = Intent(this, Login::class.java)
             startActivity(intent)
         }
-        imgEmpresa.setOnClickListener {
+        imgInfo.setOnClickListener {
             val intent = Intent(this, InformaciondelaEmpresa::class.java)
             startActivity(intent)
         }
@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity(), MainContract {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
-        imgInfo.setOnClickListener {
+        imgEmpresa.setOnClickListener {
             // **NOTA:** Reemplaza 'ActivityInfo' con el nombre de tu Activity real
             // cuando la hayas creado.
             // val intent = Intent(this, ActivityInfo::class.java)
@@ -104,10 +104,8 @@ class MainActivity : AppCompatActivity(), MainContract {
 
         // Evento para imgCategorias (Activity pendiente)
         imgCategorias.setOnClickListener {
-            // **NOTA:** Reemplaza 'ActivityCategorias' con el nombre de tu Activity real
-            // cuando la hayas creado.
-            // val intent = Intent(this, ActivityCategorias::class.java)
-            // startActivity(intent)
+             val intent = Intent(this, CategoriasActivity::class.java)
+             startActivity(intent)
         }
 
     }

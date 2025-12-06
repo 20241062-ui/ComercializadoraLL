@@ -11,11 +11,18 @@ import retrofit2.http.Query
 interface ifaceApiService {
     @GET("apiProductos.php")
     fun obtenerProductos(): Call<List<clsProductos>> // <-- ¡Verifica esta línea!
+
+
     @GET("apiProductoPorCodigo.php") // Debes crear este script PHP
     fun obtenerProductoPorCodigo(@Query("codigo") codigo: String): Call<clsProductos>
+
+
     // 2. Registro (Actualizado para incluir Apellido y vchNombre)
     @GET("apiInformacionEmpresa.php") // <-- Endpoint adaptado a tu estilo de archivo PHP
     fun obtenerInformacionEmpresa()
+
+    @GET("apiBuscarProductos.php")
+    fun buscarProductosPorQuery(@Query("query") query: String): Call<List<clsProductos>>
     @FormUrlEncoded
     @POST("apiAcceso.php")
     fun registrarUsuario(

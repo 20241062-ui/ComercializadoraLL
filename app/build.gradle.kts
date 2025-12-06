@@ -38,6 +38,9 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -49,12 +52,14 @@ dependencies {
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.cardview)
     implementation(libs.filament.android)
+    implementation(libs.androidx.legacy.support.v4)
+    implementation(libs.androidx.leanback)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
     implementation ("com.squareup.retrofit2:retrofit:3.0.0")
-    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:3.0.0")
     implementation ("com.github.bumptech.glide:glide:5.0.5")
     implementation ("com.google.android.exoplayer:exoplayer:2.19.1")
 
@@ -82,9 +87,9 @@ dependencies {
     kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.57.2")
 
     testImplementation("junit:junit:4.13.2")
-    testImplementation("org.mockito:mockito-core:5.3.1")
+    testImplementation("org.mockito:mockito-core:5.20.0")
     testImplementation("org.mockito:mockito-inline:5.2.0")
-    testImplementation("org.mockito.kotlin:mockito-kotlin:5.1.0")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:6.1.0")
     testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0") // Ayuda con sintaxis Kotlin
     testImplementation(kotlin("test"))
     // Dependencia de ML Kit para escaneo de códigos (Opción moderna)
@@ -96,4 +101,6 @@ dependencies {
     implementation(libs.firebase.analytics.ktx)
     implementation(libs.firebase.messaging.ktx)
     implementation(libs.google.mlkit.barcode)
+
+    implementation("com.journeyapps:zxing-android-embedded:4.3.0")
 }

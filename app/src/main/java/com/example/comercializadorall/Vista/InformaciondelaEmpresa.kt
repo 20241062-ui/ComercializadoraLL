@@ -19,7 +19,7 @@ class InformaciondelaEmpresa : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val openLoginImage: ImageView = findViewById(R.id.imgInicio)
+        val openLoginImage: ImageView = findViewById(R.id.imgPerfil)
         val imgInfo: ImageView = findViewById(R.id.imgInfo)
         val imgInicio: ImageView = findViewById(R.id.imgInicio)
         val imgCategorias: ImageView = findViewById(R.id.imgCategorias)
@@ -28,7 +28,7 @@ class InformaciondelaEmpresa : AppCompatActivity() {
             val intent = Intent(this, Login::class.java)
             startActivity(intent)
         }
-        imgEmpresa.setOnClickListener {
+        imgInfo.setOnClickListener {
             val intent = Intent(this, InformaciondelaEmpresa::class.java)
             startActivity(intent)
         }
@@ -36,7 +36,7 @@ class InformaciondelaEmpresa : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
-        imgInfo.setOnClickListener {
+        imgEmpresa.setOnClickListener {
             // **NOTA:** Reemplaza 'ActivityInfo' con el nombre de tu Activity real
             // cuando la hayas creado.
             // val intent = Intent(this, ActivityInfo::class.java)
