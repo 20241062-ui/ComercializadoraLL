@@ -7,7 +7,7 @@ junitVersion = "1.3.0"
 espressoCore = "3.7.0"
 appcompat = "1.7.1"
 material = "1.13.0"
-activity = "1.12.0"
+activity = "1.12.1"
 constraintlayout = "2.2.1"
 recyclerview = "1.4.0"
 cardview = "1.0.0"
@@ -16,6 +16,8 @@ gmsMlkitBarcode = "18.3.1"
 firebaseMessaging = "24.1.2"
 firebaseAnalytics = "22.5.0"
 filamentAndroid = "1.17.1"
+legacySupportV4 = "1.0.0"
+leanback = "1.2.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -32,6 +34,8 @@ firebase-messaging-ktx = { group = "com.google.firebase", name = "firebase-messa
 firebase-analytics-ktx = { group = "com.google.firebase", name = "firebase-analytics-ktx", version.ref = "firebaseAnalytics" }
 google-mlkit-barcode = { group = "com.google.android.gms", name = "play-services-mlkit-barcode-scanning", version.ref = "gmsMlkitBarcode" }
 filament-android = { group = "com.google.ar.sceneform", name = "filament-android", version.ref = "filamentAndroid" }
+androidx-legacy-support-v4 = { group = "androidx.legacy", name = "legacy-support-v4", version.ref = "legacySupportV4" }
+androidx-leanback = { group = "androidx.leanback", name = "leanback", version.ref = "leanback" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
