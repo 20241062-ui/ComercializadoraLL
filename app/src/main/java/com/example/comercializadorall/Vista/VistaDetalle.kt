@@ -101,13 +101,13 @@ class VistaDetalle : AppCompatActivity(), ICarritoView {
         val intent = intent
 
         // 1. Extraer los datos del Intent (incluyendo Cobertura, Serie y la forma de tu segunda clase)
-        val noSerie = intent.getStringExtra("producto_no_serie") ?: intent.getStringExtra("producto_serie") // Soporte para ambos nombres
+        val noSerie = intent.getStringExtra("producto_id") ?: intent.getStringExtra("producto_serie") // Soporte para ambos nombres
         val nombre = intent.getStringExtra("producto_nombre")
         val descripcion = intent.getStringExtra("producto_descripcion")
         val imagenUrl = intent.getStringExtra("producto_imagen")
         val marca = intent.getStringExtra("producto_marca")
         val cobertura = intent.getStringExtra("producto_cobertura") // Dato de la segunda clase
-
+        val categoria = intent.getStringExtra("producto_categoria")
         val precio = intent.getFloatExtra("producto_precio", 0.0f)
         val stock = intent.getIntExtra("producto_stock", 0)
 
@@ -123,7 +123,7 @@ class VistaDetalle : AppCompatActivity(), ICarritoView {
                 vchMarca = marca ?: "Marca Desconocida",
                 floPrecioUnitario = precio,
                 intStock = stock,
-                vchCobertura = cobertura ?: "", // <-- Valor agregado
+                vchCobertura = cobertura ?: "",
                 intCantidadCarrito = 1
             )
         } else {
