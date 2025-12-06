@@ -53,6 +53,7 @@ dependencies {
     implementation(libs.androidx.cardview)
     implementation(libs.filament.android)
     implementation(libs.androidx.legacy.support.v4)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -60,6 +61,7 @@ dependencies {
     implementation ("com.squareup.retrofit2:retrofit:3.0.0")
     implementation ("com.squareup.retrofit2:converter-gson:3.0.0")
     implementation ("com.github.bumptech.glide:glide:5.0.5")
+    implementation ("com.google.android.exoplayer:exoplayer:2.19.1")
 
 // Keep these (and ensure they use the latest version)
     implementation("androidx.media3:media3-exoplayer:1.8.0")
@@ -99,4 +101,8 @@ dependencies {
     implementation(libs.firebase.analytics.ktx)
     implementation(libs.firebase.messaging.ktx)
     implementation(libs.google.mlkit.barcode)
+
+    implementation("com.journeyapps:zxing-android-embedded:4.3.0")
+    implementation("com.google.mlkit:barcode-scanning:17.3.0")
+    implementation ("com.google.android.gms:play-services-mlkit-barcode-scanning:18.3.1")
 }

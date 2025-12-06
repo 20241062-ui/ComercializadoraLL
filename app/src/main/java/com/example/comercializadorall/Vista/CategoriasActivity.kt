@@ -16,7 +16,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.leanback.widget.Presenter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.comercializadorall.Modelo.clsProductos
 import com.example.comercializadorall.Presentador.CategoriasPresenter
