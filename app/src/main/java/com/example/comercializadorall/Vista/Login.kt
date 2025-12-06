@@ -36,14 +36,14 @@ class Login : AppCompatActivity(), LoginContract {
         tvRegistrar = findViewById(R.id.txtRegistrar)
 
 
-        val model = LoginModel()
+        val model = LoginModel(context = this)
 
         val presentador = LoginPresenter(this, model)
 
         btnAcceder.setOnClickListener {
             val correo = etCorreo.text.toString() // Variable renombrada
             val password = etPassword.text.toString()
-            presentador.iniciarSesion(correo, password) // Método presentador actualizado (usa correo)
+            presentador.iniciarSesion(correo, password)
         }
 
         tvRegistrar.setOnClickListener {
