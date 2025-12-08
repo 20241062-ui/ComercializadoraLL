@@ -49,12 +49,9 @@ class CategoriasRepository(private val apiService: ifaceApiService) : Categorias
 
 
 // 3. Implementación del Presenter (Lógica) - ¡CORREGIDO!
-class CategoriasPresenter(
-    private var view: CategoriasContract.View?,
-    private val repository: CategoriasRepository = CategoriasRepository(RetrofitClient.instance)
+class CategoriasPresenter(private var view: CategoriasContract.View?, private val repository: CategoriasRepository = CategoriasRepository(RetrofitClient.instance)
 ) : CategoriasContract.Presenter {
 
-    // 💡 Método iniciar() - Se llama al iniciar la Activity
     override fun iniciar() {
         view?.mostrarCargando(true) // 👈 INICIO DE CARGA
 
@@ -76,14 +73,15 @@ class CategoriasPresenter(
 
     // 💡 Lógica para la búsqueda por texto (EditText)
     override fun buscarProductos(query: String) {
-        if (query.isBlank()) {
+        val queryLimpia = query.trim()
+        if (queryLimpia.isBlank()) {
             view?.mostrarMensajeError("Introduce un término de búsqueda.")
             return
         }
 
-        view?.mostrarCargando(true) // 👈 INICIO DE CARGA
+        view?.mostrarCargando(true)
 
-        repository.buscarProductosPorQuery(query).enqueue(object : Callback<List<clsProductos>> {
+        repository.buscarProductosPorQuery(queryLimpia).enqueue(object : Callback<List<clsProductos>> {
             override fun onResponse(call: Call<List<clsProductos>>, response: Response<List<clsProductos>>) {
                 view?.mostrarCargando(false) // 👈 FIN DE CARGA (Éxito)
                 if (response.isSuccessful && response.body() != null) {
@@ -116,9 +114,19 @@ class CategoriasPresenter(
 
     // 💡 Lógica para el escaneo QR
     override fun escanearQR(codigoQR: String) {
+
+        val codigoLimpio = codigoQR.trim()
+
+        if (codigoLimpio.isBlank()) {
+            view?.mostrarMensajeError("El código QR no es válido.")
+            return
+        }
+
         view?.mostrarCargando(true) // 👈 INICIO DE CARGA
 
-        repository.obtenerProductoPorCodigo(codigoQR).enqueue(object : Callback<clsProductos> {
+        // Usar el código limpio en la llamada a la API
+        repository.obtenerProductoPorCodigo(codigoLimpio).enqueue(object : Callback<clsProductos> {
+
             override fun onResponse(call: Call<clsProductos>, response: Response<clsProductos>) {
                 view?.mostrarCargando(false) // 👈 FIN DE CARGA (Éxito o 404)
                 val producto = response.body()
@@ -126,6 +134,7 @@ class CategoriasPresenter(
                 if (response.isSuccessful && producto != null) {
                     view?.navegarADetalleProducto(producto)
                 } else if (response.code() == 404) {
+                    // El error 404 ahora significa que el código limpio no existe en la DB
                     view?.mostrarMensajeError("Código QR no válido o producto no encontrado (404).")
                 } else {
                     view?.mostrarMensajeError("Error al procesar el código QR.")

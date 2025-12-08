@@ -5,6 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.comercializadorall.Modelo.clsProductos
+import com.example.comercializadorall.Vista.AppConstants
+import com.example.comercializadorall.Vista.CarritoActivity
 import com.example.comercializadorall.databinding.ItemCarritoBinding
 
 class CarritoAdapter(private var lista: MutableList<clsProductos>) :
@@ -12,6 +14,14 @@ class CarritoAdapter(private var lista: MutableList<clsProductos>) :
 
     inner class ViewHolder(val binding: ItemCarritoBinding) :
         RecyclerView.ViewHolder(binding.root)
+
+    interface OnItemClickListener {
+        fun onEliminarClick(producto: clsProductos, position: Int)
+    }
+    private var listener: OnItemClickListener? = null
+    fun setOnItemClickListener(listener: CarritoActivity) {
+        this.listener = listener
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -21,14 +31,18 @@ class CarritoAdapter(private var lista: MutableList<clsProductos>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val p = lista[position]
-
+        val urlImagenCompleta = AppConstants.URL_BASE_IMAGENES + p.vchImagen
         holder.binding.txtNombre.text = p.vchNombre
         holder.binding.txtMarca.text = p.vchMarca
         holder.binding.txtPrecio.text = "$${p.floPrecioUnitario}"
 
         Glide.with(holder.itemView.context)
-            .load(p.vchImagen)
+            .load(urlImagenCompleta) // <-- ¡AHORA USAMOS LA URL COMPLETA!
             .into(holder.binding.imgProducto)
+
+        holder.binding.imgDelete.setOnClickListener {
+            listener?.onEliminarClick(p, position)
+        }
     }
 
     override fun getItemCount(): Int = lista.size

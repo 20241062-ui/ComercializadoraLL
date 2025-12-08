@@ -1,5 +1,6 @@
 package com.example.comercializadorall.Presentador
 
+import com.bumptech.glide.load.model.Model
 import com.example.comercializadorall.Modelo.*
 import com.example.comercializadorall.Modelo.ICarritoModel
 import com.example.comercializadorall.Presentador.CarritoPresenter
@@ -22,6 +23,10 @@ class CarritoPresenter(
             // 🚨 OPCIONAL: Si tu ICarritoView tiene un método para navegar a Login, úsalo aquí.
             // view.navegarALogin()
         }
+    }
+    fun eliminarProducto(producto: clsProductos, position: Int) {
+        modelo.eliminarProducto(producto)
+        cargarCarrito()
     }
 
     override fun cargarCarrito() {

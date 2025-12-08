@@ -6,4 +6,5 @@ interface ICarritoModel {
     fun guardarCarrito(lista: MutableList<clsProductos>)
     fun limpiarCarrito()
     fun estaSesionIniciada(): Boolean
+    fun eliminarProducto(producto: clsProductos)
 }

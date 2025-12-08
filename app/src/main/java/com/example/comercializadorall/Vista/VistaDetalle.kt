@@ -1,5 +1,6 @@
 package com.example.comercializadorall.Vista
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -18,6 +19,7 @@ import com.example.comercializadorall.Modelo.clsProductos
 import com.example.comercializadorall.Presentador.CarritoPresenter
 import com.example.comercializadorall.Vista.Contracts.ICarritoView
 import com.example.comercializadorall.Modelo.ICarritoModel // Asegúrate que esta importación sea correcta si usas ICarritoModel en el Presenter
+import com.example.comercializadorall.Modelo.LoginModel
 
 class VistaDetalle : AppCompatActivity(), ICarritoView {
 
@@ -36,6 +38,12 @@ class VistaDetalle : AppCompatActivity(), ICarritoView {
     // Propiedades de Carrito y Producto
     private lateinit var carritoPresenter: CarritoPresenter
     private var productoActual: clsProductos? = null
+    private val loginModel by lazy {
+        LoginModel(
+            getSharedPreferences("TUS_PREFS", Context.MODE_PRIVATE),
+            "SESSION_ID"
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,19 +89,31 @@ class VistaDetalle : AppCompatActivity(), ICarritoView {
         val imgInfo: ImageView = findViewById(R.id.imgInfo)
         val imgInicio: ImageView = findViewById(R.id.imgInicio)
         val imgCategorias: ImageView = findViewById(R.id.imgCategorias)
-        val imgEmpresa: ImageView = findViewById(R.id.imgEmpresa)
-
         openLoginImage.setOnClickListener {
-            startActivity(Intent(this, Login::class.java))
+            val idUsuario = loginModel.obtenerIdUsuarioActivo()
+
+            if (idUsuario != null) {
+                val intent = Intent(this, Perfil::class.java)
+                startActivity(intent)
+
+            } else {
+                val intent = Intent(this, Login::class.java)
+                startActivity(intent)
+            }
         }
         imgInfo.setOnClickListener {
-            startActivity(Intent(this, InformaciondelaEmpresa::class.java))
+            val intent = Intent(this, InformaciondelaEmpresa::class.java)
+            startActivity(intent)
         }
         imgInicio.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
         }
+
+        // Evento para imgCategorias (Activity pendiente)
         imgCategorias.setOnClickListener {
-            startActivity(Intent(this, CategoriasActivity::class.java))
+            val intent = Intent(this, CategoriasActivity::class.java)
+            startActivity(intent)
         }
     }
 

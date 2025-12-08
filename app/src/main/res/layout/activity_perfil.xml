@@ -2,8 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".Vista.Perfil"
     android:background="#C0C0C0">
 
     <androidx.cardview.widget.CardView
@@ -73,46 +75,73 @@
                 app:layout_constraintStart_toEndOf="@+id/imgInfo"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.485"
-                app:srcCompat="@drawable/profileicon"  tools:srcCompat="@drawable/profileicon" />
+                app:srcCompat="@drawable/profileicon"
+                tools:srcCompat="@drawable/profileicon" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="272dp"
-        android:layout_height="43dp"
-        android:layout_marginTop="44dp"
-        android:textSize="28dp"
-        android:textAlignment="center"
-        android:textStyle="bold"
-        android:text="Lista de Productos Agregados"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvProductosCarrito"
-        android:layout_width="328dp"
-        android:layout_height="442dp"
-        android:layout_marginTop="28dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
     <Button
-        android:id="@+id/btnFinalizarCompra"
+        android:id="@+id/btnCredenciales"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="168dp"
-        android:layout_marginEnd="153dp"
-        android:text="Finalizar compra"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="32dp"
+        android:text="Editar credenciales"
+        app:layout_constraintEnd_toEndOf="@+id/imageView2"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+    <Button
+        android:id="@+id/btnVerCarrito"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:text="Ver carrito de compra"
+        app:layout_constraintEnd_toEndOf="@+id/btnCredenciales"
+        app:layout_constraintHorizontal_bias="0.562"
+        app:layout_constraintStart_toStartOf="@+id/btnCredenciales"
+        app:layout_constraintTop_toBottomOf="@+id/btnCredenciales" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Metodos de pago"
+        app:layout_constraintEnd_toEndOf="@+id/btnVerCarrito"
+        app:layout_constraintHorizontal_bias="0.518"
+        app:layout_constraintStart_toStartOf="@+id/btnVerCarrito"
+        app:layout_constraintTop_toBottomOf="@+id/btnVerCarrito" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:text="Preguntas Frecuentes"
+        app:layout_constraintEnd_toEndOf="@+id/button3"
+        app:layout_constraintStart_toStartOf="@+id/button3"
+        app:layout_constraintTop_toBottomOf="@+id/button3" />
+
+    <Button
+        android:id="@+id/btnCerrarSesion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="Cerrar sesion"
+        app:layout_constraintEnd_toEndOf="@+id/button4"
+        app:layout_constraintStart_toStartOf="@+id/button4"
+        app:layout_constraintTop_toBottomOf="@+id/button4" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.625"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rvProductosCarrito"
-        app:layout_constraintVertical_bias="0.293" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/blacklogo" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
