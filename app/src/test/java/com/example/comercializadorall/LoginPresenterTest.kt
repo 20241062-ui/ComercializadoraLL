@@ -1,73 +1,97 @@
-package com.example.comercializadorall
-
 import com.example.comercializadorall.Modelo.LoginModel
 import com.example.comercializadorall.Presentador.LoginPresenter
 import com.example.comercializadorall.Vista.Contracts.LoginContract
 import com.example.comercializadorall.Vista.clsDatosRespuesta
 import org.junit.Before
 import org.junit.Test
-import org.mockito.kotlin.any
-import org.mockito.kotlin.doAnswer
-import org.mockito.kotlin.mock
-import org.mockito.kotlin.never
-import org.mockito.kotlin.verify
-import org.mockito.kotlin.eq
+import org.mockito.Mockito.*
 
 class LoginPresenterTest {
-    // 1. Declarar los Mocks para la Vista y el Modelo
-    private val mockVista: LoginContract = mock() // Simula el Activity/Fragment
-    private val mockModel: LoginModel = mock()   // Simula la llamada a la API
 
-    // 2. Instancia real del Presenter, inyectando los Mocks
-    private lateinit var presenter: LoginPresenter
+    //Instancias a simular (Mocks)
+    private lateinit var mockVista: LoginContract
+    private lateinit var mockModelo: LoginModel
 
+    //Instancia a probar
+    private lateinit var presentador: LoginPresenter
+
+    //se ejecuta antes de cada prueba
     @Before
-    fun setup() {
-        presenter = LoginPresenter(mockVista, mockModel)
+    fun setUp() {
+        // Inicializar las instancias simuladas
+        mockVista = mock(LoginContract::class.java)
+        mockModelo = mock(LoginModel::class.java)
+
+        // Crear el Presenter con las dependencias simuladas
+        presentador = LoginPresenter(mockVista, mockModelo)
     }
 
-    // --- Caso 1: Login Exitoso ---
+    // ESCENARIOS DE VALIDACIÓN LOCAL
     @Test
-    fun iniciarSesion_successfulResponse_navigatesToMain() {
-        // ARRANGE: Decirle al Mock del Model que responda con éxito
-        doAnswer { invocation ->
-            val callback = invocation.getArgument<(List<clsDatosRespuesta>?, String?) -> Unit>(2)
+    fun iniciarSesion_camposVacios_muestraMensajeError() {
 
-            // CORRECCIÓN APLICADA AQUÍ: Se usa "Correcto" y el user_id es un Int
-            val successfulList = listOf(clsDatosRespuesta("Correcto", "Login exitoso", 42))
+        // Llamar al metodo campos vacios
+        presentador.iniciarSesion("", "password123")
+        presentador.iniciarSesion("correo@test.com", "")
+        presentador.iniciarSesion("", "")
 
-            callback.invoke(successfulList, null)
-            null
-        }.`when`(mockModel).iniciarSesion(any(), any(), any())
+        //Verificar que se mostró el mensaje de error *sin llamar al modelo
+        verify(mockVista, times(3)).mostrarMensaje("Debe llenar todos los campos")
+        verify(mockModelo, never()).iniciarSesion(anyString(), anyString(), any())
+    }
 
-        // ACT y ASSERT (Se mantienen los nombres de funciones ya corregidos: iniciarSesion y navegarAMain)
-        presenter.iniciarSesion("a@b.com", "12345")
+    //ESCENARIOS DE INTERACCIÓN CON LA API (SIMULADA)
 
+    @Test
+    fun iniciarSesion_credencialesCorrectas_navegaAMain() {
+        //Configurar el Mock del Modelo para simular una respuesta exitosa de la API
+        val respuestaExitosa = listOf(clsDatosRespuesta("Correcto", "Bienvenido", user_id = 1))
+
+        // Simular que el modelo responde con éxito a la llamada API
+        `when`(mockModelo.iniciarSesion(anyString(), anyString(), any())).thenAnswer { invocation ->
+            // Capturamos el callback y lo ejecutamos con los datos simulados
+            val callback = invocation.arguments[2] as (List<clsDatosRespuesta>?, String?) -> Unit
+            callback(respuestaExitosa, null)
+        }
+        presentador.iniciarSesion("correo_ok@test.com", "password_ok")
+
+        //Verificar que el modelo fue llamado y se ejecutó la navegación
+        verify(mockModelo).iniciarSesion(eq("correo_ok@test.com"), eq("password_ok"), any())
         verify(mockVista).navegarAMain()
-        verify(mockVista, never()).mostrarMensaje(any())
+        verify(mockVista, never()).mostrarMensaje(anyString())
     }
 
-    // --- Caso 2: Login Fallido (Error de servidor) ---
     @Test
-    fun login_errorModelResponse_showsErrorMessage() {
-        // ARRANGE
-        val expectedError = "Credenciales incorrectas"
+    fun iniciarSesion_credencialesIncorrectas_muestraMensajeError() {
+        // Configurar el Mock del Modelo para simular una respuesta fallida de la API
+        val respuestaFallida = listOf(clsDatosRespuesta("Incorrecto", "Credenciales invalidas"))
 
-        // 1. Configurar el Mock del Model para FALLAR
-        doAnswer { invocation ->
-            // Simular la respuesta fallida
-            val callback = invocation.getArgument<(List<clsDatosRespuesta>?, String?) -> Unit>(2)
-            callback.invoke(null, expectedError) // Pasa null en datos y el error
-            null
-        }.`when`(mockModel).iniciarSesion(any(), any(), any())
+        // Simular que el modelo responde con datos de error
+        `when`(mockModelo.iniciarSesion(anyString(), anyString(), any())).thenAnswer { invocation ->
+            val callback = invocation.arguments[2] as (List<clsDatosRespuesta>?, String?) -> Unit
+            callback(respuestaFallida, null)
+        }
+        presentador.iniciarSesion("error@test.com", "bad_password")
 
-        // ACT
-        presenter.iniciarSesion("user", "pass")
+        // Verificar el mensaje de error
+        verify(mockVista).mostrarMensaje("Usuario o contraseña incorrectos")
+        verify(mockVista, never()).navegarAMain()
+    }
 
-        // ASSERT
-        // 2. Verificar que la VISTA fue llamada para mostrar el error esperado
-        verify(mockVista).mostrarMensaje(expectedError)
-        // Y que no haya intentado navegar a Home
+    @Test
+    fun iniciarSesion_errorConexionApi_muestraMensajeDeError() {
+        //simular un error de conexión
+        val errorDeConexion = "Error en la conexión: Timeout"
+
+        // Simular que el modelo responde con un error de conexión
+        `when`(mockModelo.iniciarSesion(anyString(), anyString(), any())).thenAnswer { invocation ->
+            val callback = invocation.arguments[2] as (List<clsDatosRespuesta>?, String?) -> Unit
+            callback(null, errorDeConexion)
+        }
+        presentador.iniciarSesion("error@test.com", "password")
+
+        //Verificar que se mostró el mensaje de error
+        verify(mockVista).mostrarMensaje(errorDeConexion)
         verify(mockVista, never()).navegarAMain()
     }
 }

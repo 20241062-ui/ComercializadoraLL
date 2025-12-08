@@ -1,0 +1,89 @@
+import com.example.comercializadorall.Modelo.ICarritoModel
+import com.example.comercializadorall.Modelo.clsProductos
+import com.example.comercializadorall.Presentador.CarritoPresenter
+import com.example.comercializadorall.Vista.Contracts.ICarritoView
+import org.junit.Before
+import org.junit.Test
+import org.mockito.Mockito.*
+
+class CarritoPresenterTest {
+
+    // Instancias simuladas (Mocks)
+    private lateinit var mockView: ICarritoView
+    private lateinit var mockModel: ICarritoModel
+
+    // Instancia a probar
+    private lateinit var presenter: CarritoPresenter
+
+    // Producto de prueba
+    private val productoDummy = clsProductos(
+        vchNo_Serie = "SN123",
+        vchNombre = "Laptop Test",
+        floPrecioUnitario = 1000.0f,
+        vchMarca = "MarcaX",
+        vchImagen = "url_imagen",
+        intCantidadCarrito = 1
+    )
+
+    @Before
+    fun setUp() {
+        mockView = mock(ICarritoView::class.java)
+        mockModel = mock(ICarritoModel::class.java)
+        presenter = CarritoPresenter(mockView, mockModel)
+    }
+
+    // --- TEST PARA agregarAlCarrito ---
+
+    @Test
+    fun agregarAlCarrito_sesionIniciada_agregaProductoYmuestraMensaje() {
+        // Arrange: Simular que la sesión ESTÁ iniciada
+        `when`(mockModel.estaSesionIniciada()).thenReturn(true)
+
+        // Act
+        presenter.agregarAlCarrito(productoDummy)
+
+        // Assert:
+        // 1. Verificar que el Modelo fue llamado para agregar el producto
+        verify(mockModel).agregarProducto(productoDummy)
+        // 2. Verificar que se mostró el mensaje de éxito
+        verify(mockView).mostrarMensaje("Producto agregado al carrito")
+        // 3. Verificar que NO se llamó a navegarALogin
+        verify(mockView, never()).navegarALogin()
+    }
+
+    @Test
+    fun agregarAlCarrito_sesionNoIniciada_muestraMensajeDeErrorYNavega() {
+        //Simula que la sesión NO ESTÁ iniciada
+        `when`(mockModel.estaSesionIniciada()).thenReturn(false)
+        presenter.agregarAlCarrito(productoDummy)
+
+        // 1. Verificar que el Modelo NO fue llamado para agregar el producto
+        verify(mockModel, never()).agregarProducto(any())
+        // 2. Verificar que se mostró el mensaje de error
+        verify(mockView).mostrarMensaje("Debes iniciar sesión para agregar productos al carrito.")
+        // 3. Verificar que se llamó a navegarALogin (asumiendo que se activa)
+        verify(mockView).navegarALogin()
+    }
+
+    //TEST PARA cargarCarrito
+    @Test
+    fun cargarCarrito_modeloVacio_muestraListaVacia() {
+        //Simula que el Modelo devuelve una lista vacía
+        val listaVacia = mutableListOf<clsProductos>()
+        `when`(mockModel.obtenerCarrito()).thenReturn(listaVacia)
+        presenter.cargarCarrito()
+
+        //Verifica que la Vista recibió la lista vacía
+        verify(mockView).mostrarCarrito(listaVacia)
+    }
+    @Test
+    fun cargarCarrito_modeloConDatos_muestraListaCompleta() {
+        //Simula que el Modelo devuelve productos
+        val listaConProductos = mutableListOf(productoDummy, productoDummy.copy(vchNo_Serie = "SN456"))
+        `when`(mockModel.obtenerCarrito()).thenReturn(listaConProductos)
+        presenter.cargarCarrito()
+
+        //Verifica que la Vista recibió la lista correcta
+        verify(mockView).mostrarCarrito(listaConProductos)
+    }
+}

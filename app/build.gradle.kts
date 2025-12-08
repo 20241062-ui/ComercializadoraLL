@@ -70,6 +70,22 @@ dependencies {
     implementation("androidx.media3:media3-extractor:1.8.0")
     implementation("com.squareup.okhttp3:logging-interceptor:5.3.2")
 
+    // Tests unitarios
+    testImplementation ("junit:junit:4.13.2")
+    testImplementation ("org.mockito:mockito-core:5.3.1")
+    testImplementation ("org.mockito:mockito-inline:4.+")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:5.3.1")
+    // Necesario para que Retrofit funcione con Mockito
+    testImplementation("com.squareup.retrofit2:retrofit:2.9.0")
+    testImplementation ("org.mockito:mockito-core:5.3.1")
+    testImplementation ("org.mockito:mockito-inline:5.2.0")
+    testImplementation ("androidx.arch.core:core-testing:2.2.0")
+
+    // Tests instrumentados
+    androidTestImplementation ("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation ("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation ("org.mockito:mockito-android:5.3.1")
+
     // PRUEBAS DE INSTRUMENTACIÓN (androidTestImplementation)
     // Framework de pruebas principal
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
@@ -86,9 +102,6 @@ dependencies {
     // ... y el procesador de anotaciones
     kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.57.2")
 
-    testImplementation("junit:junit:4.13.2")
-    testImplementation("org.mockito:mockito-core:5.20.0")
-    testImplementation("org.mockito:mockito-inline:5.2.0")
     testImplementation("org.mockito.kotlin:mockito-kotlin:6.1.0")
     testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0") // Ayuda con sintaxis Kotlin
     testImplementation(kotlin("test"))
