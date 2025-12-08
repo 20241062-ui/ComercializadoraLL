@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".activity_kart">
+    tools:context=".Vista.activity_kart">
 
     <ImageView
         android:id="@+id/imageView14"
@@ -24,6 +24,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
         android:text="Marca del producto"
+        app:layout_constraintEnd_toEndOf="@+id/txtPrecio"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/imageView14"
         app:layout_constraintTop_toBottomOf="@+id/txtProducto" />
 
@@ -47,23 +49,16 @@
         android:layout_marginTop="24dp"
         android:text="Nombre del producto"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="135dp" />
+        app:layout_constraintStart_toEndOf="@+id/imageView14"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnEliminar"
-        android:layout_width="60dp"
-        android:layout_height="63dp"
-        android:layout_marginStart="79dp"
-        android:layout_marginEnd="17dp"
-        app:circularflow_radiusInDP="0"
-        app:cornerRadius="@dimen/material_emphasis_medium"
-        app:icon="@android:drawable/ic_menu_delete"
-        app:iconSize="@dimen/material_emphasis_medium"
-        app:iconTint="#FFFFFF"
+        android:layout_width="65dp"
+        android:layout_height="61dp"
+        android:text="Button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/txtMarca"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,7 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Vista.CategoriasActivity">
+    tools:context=".Vista.CategoriasActivity"
+    android:background="#C0C0C0">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -41,7 +42,7 @@
                 app:layout_constraintStart_toEndOf="@+id/imgInfo"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.485"
-                tools:srcCompat="@drawable/profileicon" />
+                app:srcCompat="@drawable/profileicon"  tools:srcCompat="@drawable/profileicon" />
 
             <ImageView
                 android:id="@+id/imgInicio"
@@ -137,7 +138,8 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginBottom="16dp"
                 android:text="Explorar Categorías"
-                android:textSize="24sp"
+                android:gravity="center"
+                android:textSize="28sp"
                 android:textStyle="bold"
                 android:textColor="#000000" />
 
@@ -146,7 +148,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:paddingHorizontal="16dp"
                 android:nestedScrollingEnabled="false" app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:spanCount="2" />
+                app:spanCount="1" />
 
 
 

@@ -4,11 +4,13 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -17,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.comercializadorall.Modelo.LoginModel
 import com.example.comercializadorall.Modelo.clsProductos
 import com.example.comercializadorall.Presentador.CategoriasPresenter
 import com.example.comercializadorall.R
@@ -28,6 +31,7 @@ class CategoriasActivity : AppCompatActivity(), CategoriasContract.View {
     private lateinit var editTextSearch: EditText
     private lateinit var btnScanQR: ImageButton
     private lateinit var recyclerViewCategorias: RecyclerView
+    private lateinit var loginModel: LoginModel
     private lateinit var progressBar: ProgressBar
     private lateinit var presenter: CategoriasContract.Presenter
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,6 +43,34 @@ class CategoriasActivity : AppCompatActivity(), CategoriasContract.View {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        loginModel = LoginModel(
+            getSharedPreferences("TUS_PREFS", Context.MODE_PRIVATE),
+            "SESSION_ID"
+        )
+        val openLoginImage: ImageView = findViewById(R.id.imgPerfil)
+        val imgInfo: ImageView = findViewById(R.id.imgInfo)
+        val imgInicio: ImageView = findViewById(R.id.imgInicio)
+        openLoginImage.setOnClickListener {
+            val idUsuario = loginModel.obtenerIdUsuarioActivo()
+
+            if (idUsuario != null) {
+                val intent = Intent(this, Perfil::class.java)
+                startActivity(intent)
+
+            } else {
+                val intent = Intent(this, Login::class.java)
+                startActivity(intent)
+            }
+        }
+        imgInfo.setOnClickListener {
+            val intent = Intent(this, InformaciondelaEmpresa::class.java)
+            startActivity(intent)
+        }
+        imgInicio.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
         inicializarVistas()
         // 2. Inicialización del Presenter
         // Aquí pasas la Activity (this) que implementa CategoriasContract.View
@@ -67,7 +99,7 @@ class CategoriasActivity : AppCompatActivity(), CategoriasContract.View {
             val codigoQR = scanResult.contents
 
             if (codigoQR != null) {
-                // Si el escaneo es exitoso, pasa el código al Presenter
+                Log.d("QR_DIAG", "Código Escaneado Bruto: '${codigoQR}'")
                 presenter.escanearQR(codigoQR)
             } else {
                 mostrarMensajeError("Escaneo cancelado o código no reconocido.")
@@ -130,33 +162,33 @@ class CategoriasActivity : AppCompatActivity(), CategoriasContract.View {
     }
 
     override fun mostrarCategorias(categorias: List<clsProductos>) {
-        // 🛑 1. CRÍTICO: Asegurarse de que el LayoutManager esté configurado para el GRID
-        // Esto es necesario para mostrar las categorías en 2 columnas (spanCount=2)
+
+
         if (recyclerViewCategorias.layoutManager == null) {
+
+
             recyclerViewCategorias.layoutManager =
-                androidx.recyclerview.widget.GridLayoutManager(this, 2)
+                androidx.recyclerview.widget.LinearLayoutManager(
+                    this,
+                    androidx.recyclerview.widget.RecyclerView.VERTICAL,
+                    false // No invertir la lista
+                )
         }
 
-        // 🛑 2. CREAR EL ADAPTADOR
-        // Usaremos el ProductoAdaptador para reutilizar el "cubo" de producto.
         val adaptador = ProductoAdaptador(
             contexto = this,
-            listaproductos = categorias // La lista de productos (que actúa como categorías iniciales)
+            listaproductos = categorias
         ) { productoSeleccionado ->
-            // Lógica de click: Navegar al detalle (la misma que usas en el adaptador principal)
             navegarADetalleProducto(productoSeleccionado)
         }
 
-        // 🛑 3. ASIGNAR EL ADAPTADOR
         recyclerViewCategorias.adapter = adaptador
     }
 
     override fun mostrarResultadosBusqueda(productos: List<clsProductos>) {
-        // 💡 Cambio 1: Cambiar a LinearLayoutManager para una lista vertical limpia
         recyclerViewCategorias.layoutManager =
             androidx.recyclerview.widget.LinearLayoutManager(this)
 
-        // 💡 Cambio 2: Usar el Adaptador de Producto
         val adaptador = ProductoAdaptador(
             contexto = this,
             listaproductos = productos

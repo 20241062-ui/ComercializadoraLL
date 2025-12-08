@@ -23,6 +23,9 @@
         android:theme="@style/Theme.ComercializadoraLL"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Vista.Perfil"
+            android:exported="false" />
+        <activity
             android:name=".Vista.CategoriasActivity"
             android:exported="false" />
 
@@ -45,6 +48,9 @@
             android:exported="false" />
         <activity
             android:name=".Vista.VistaDetalle"
+            android:exported="false" />
+        <activity
+            android:name=".Vista.CarritoActivity"
             android:exported="false" />
         <activity
             android:name=".Vista.MainActivity"

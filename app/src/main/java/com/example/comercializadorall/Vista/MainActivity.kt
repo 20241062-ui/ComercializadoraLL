@@ -1,5 +1,6 @@
 package com.example.comercializadorall.Vista
 
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -20,6 +21,7 @@ import com.example.comercializadorall.Vista.Contracts.MainContract
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
+import com.example.comercializadorall.Modelo.LoginModel
 import com.example.comercializadorall.Modelo.ReproducirModel
 import com.example.comercializadorall.Modelo.clsProductos
 import com.example.comercializadorall.Vista.Adaptador.ProductoAdaptador
@@ -56,6 +58,12 @@ class MainActivity : AppCompatActivity(), MainContract {
             }
         }
     }
+    private val loginModel by lazy {
+        LoginModel(
+            getSharedPreferences("TUS_PREFS", Context.MODE_PRIVATE),
+            "SESSION_ID"
+        )
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -82,27 +90,22 @@ class MainActivity : AppCompatActivity(), MainContract {
         val imgInfo: ImageView = findViewById(R.id.imgInfo)
         val imgInicio: ImageView = findViewById(R.id.imgInicio)
         val imgCategorias: ImageView = findViewById(R.id.imgCategorias)
-        val imgEmpresa: ImageView = findViewById(R.id.imgEmpresa)
         openLoginImage.setOnClickListener {
-            val intent = Intent(this, Login::class.java)
-            startActivity(intent)
+            val idUsuario = loginModel.obtenerIdUsuarioActivo()
+
+            if (idUsuario != null) {
+                val intent = Intent(this, Perfil::class.java)
+                startActivity(intent)
+
+            } else {
+                val intent = Intent(this, Login::class.java)
+                startActivity(intent)
+            }
         }
         imgInfo.setOnClickListener {
             val intent = Intent(this, InformaciondelaEmpresa::class.java)
             startActivity(intent)
         }
-        imgInicio.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-        }
-        imgEmpresa.setOnClickListener {
-            // **NOTA:** Reemplaza 'ActivityInfo' con el nombre de tu Activity real
-            // cuando la hayas creado.
-            // val intent = Intent(this, ActivityInfo::class.java)
-            // startActivity(intent)
-        }
-
-        // Evento para imgCategorias (Activity pendiente)
         imgCategorias.setOnClickListener {
              val intent = Intent(this, CategoriasActivity::class.java)
              startActivity(intent)
@@ -123,7 +126,6 @@ class MainActivity : AppCompatActivity(), MainContract {
         exoPlayer.playWhenReady = true
     }
 
-    // 💡 MÉTODO REFACTORIZADO: Aquí se inicializa el Adaptador con la lógica de click.
     override fun mostrarProductos(productos: List<clsProductos>) {
 
         // 1. Crear el Adaptador, proporcionando la lógica de click como el tercer argumento (lambda).
@@ -131,8 +133,6 @@ class MainActivity : AppCompatActivity(), MainContract {
             contexto = this,
             listaproductos = productos
         ) { productoSeleccionado ->
-            // 💡 LÓGICA DE NAVEGACIÓN (Se ejecuta al hacer click en la imagen del RecyclerView)
-
             val intent = Intent(this, VistaDetalle::class.java).apply {
                 // Pasar los datos del producto seleccionado
                 putExtra("producto_id", productoSeleccionado.vchNo_Serie)
@@ -148,7 +148,6 @@ class MainActivity : AppCompatActivity(), MainContract {
             startActivity(intent)
         }
 
-        // 2. Asignar el adaptador al RecyclerView.
         rcvProductos.adapter = adaptador
     }
 
