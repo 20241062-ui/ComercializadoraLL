@@ -80,9 +80,11 @@ dependencies {
 
     // MockWebServer: CLAVE para simular el servidor de la API
     androidTestImplementation("com.squareup.okhttp3:mockwebserver:5.3.2")
+    implementation("com.squareup.okhttp3:okhttp:5.3.2")
 
     // Si usas Hilt para inyección de dependencias
     androidTestImplementation("com.google.dagger:hilt-android-testing:2.57.2")
+    implementation("com.squareup.okhttp3:logging-interceptor:5.3.2")
     // ... y el procesador de anotaciones
     kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.57.2")
 

@@ -15,11 +15,6 @@ interface ifaceApiService {
 
     @GET("apiProductoPorCodigo.php")
     fun obtenerProductoPorCodigo(@Query("codigo") codigo: String): Call<clsProductos>
-
-
-    @GET("apiInformacionEmpresa.php")
-    fun obtenerInformacionEmpresa()
-
     @GET("apiBuscarProductos.php")
     fun buscarProductosPorQuery(@Query("q") query: String): Call<List<clsProductos>>
     @FormUrlEncoded

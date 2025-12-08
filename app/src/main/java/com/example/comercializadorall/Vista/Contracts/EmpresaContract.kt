@@ -1,6 +1,16 @@
 package com.example.comercializadorall.Vista.Contracts
 
+import com.example.comercializadorall.Modelo.clsInformacion
+
 interface EmpresaContract {
-    fun mostrarInformacion(mision: String, vision: String)
-    fun mostrarError(mensaje: String)
+
+    interface View {
+        fun mostrarInformacion(mision: clsInformacion, vision: clsInformacion)
+        fun mostrarError(mensaje: String)
+    }
+
+    // Lo que el Presenter puede hacer
+    interface Presenter {
+        fun cargarDatos()
+    }
 }
