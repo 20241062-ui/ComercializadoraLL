@@ -14,13 +14,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 
-class MainPresenter(private val view: MainContract) { // Contrato actualizado
+class MainPresenter(private val view: MainContract) {
 
-    private val apiService: ifaceApiService // Interfaz de servicio actualizada
+    private val apiService: ifaceApiService
 
     init {
         val retrofit = Retrofit.Builder()
-            // URL base actualizada a Productos/api/
             .baseUrl("https://comercializadorall.grupoctic.com/ComercializadoraLL/API/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(OkHttpClient())
@@ -40,13 +39,11 @@ class MainPresenter(private val view: MainContract) { // Contrato actualizado
                         view.mostrarProductos(productos)
 
                     } ?: run {
-                        // Si la respuesta es 200 OK, pero el cuerpo (body) es nulo
                         Log.e("API_DIAG", "Respuesta 200 pero cuerpo nulo. URL: ${call.request().url}")
                         view.mostrarError("Error de datos: El servidor respondió OK pero sin contenido.")
                     }
 
                 } else {
-                    // Si la respuesta HTTP no es 200 (ej. 404, 500, 401)
                     val errorMsg = "HTTP Error ${response.code()}: ${response.message()}"
                     Log.e("API_DIAG", errorMsg)
                     view.mostrarError("Error: ${response.code()} ${response.message()}")
@@ -54,12 +51,10 @@ class MainPresenter(private val view: MainContract) { // Contrato actualizado
             }
 
             override fun onFailure(call: Call<List<clsProductos>>, t: Throwable) {
-                // Falla de red, tiempo de espera (timeout) o error de deserialización (Gson)
                 val fullError = t.message ?: "Mensaje de error nulo"
 
                 Log.e("API_DIAG", "Fallo de conexión o deserialización: $fullError", t)
 
-                // Si el error es el famoso "malformed JSON", imprimimos un mensaje específico:
                 if (fullError.contains("malformed JSON", ignoreCase = true)) {
                     view.mostrarError("Error: JSON malformado. Revisa tu PHP.")
                 } else {

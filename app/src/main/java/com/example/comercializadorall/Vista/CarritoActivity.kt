@@ -15,6 +15,7 @@ import com.example.comercializadorall.Vista.AppConstants.PREFS_NAME
 import com.example.comercializadorall.Vista.AppConstants.SESSION_KEY
 import com.example.comercializadorall.Vista.Contracts.ICarritoView
 import com.example.comercializadorall.databinding.ActivityCarritocompraBinding
+import com.example.comercializadorall.Modelo.SessionManager
 
 
 class CarritoActivity : AppCompatActivity(), ICarritoView,CarritoAdapter.OnItemClickListener {
@@ -22,9 +23,17 @@ class CarritoActivity : AppCompatActivity(), ICarritoView,CarritoAdapter.OnItemC
     private lateinit var binding: ActivityCarritocompraBinding
     private lateinit var presenter: CarritoPresenter
     private lateinit var adapter: CarritoAdapter
-    private val loginModel by lazy {
-        val prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        LoginModel(prefs, SESSION_KEY)
+    object AppConstants {
+        const val PREFS_NAME = "TUS_PREFS"
+        const val SESSION_KEY = "SESSION_ID"
+    }
+
+    private val sessionManager by lazy {
+        val prefs = getSharedPreferences(AppConstants.PREFS_NAME, Context.MODE_PRIVATE)
+        SessionManager(
+            prefs,
+            AppConstants.SESSION_KEY
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,7 +54,7 @@ class CarritoActivity : AppCompatActivity(), ICarritoView,CarritoAdapter.OnItemC
         val imgInicio: ImageView = findViewById(R.id.imgInicio)
         val imgCategorias: ImageView = findViewById(R.id.imgCategorias)
         openLoginImage.setOnClickListener {
-            val idUsuario = loginModel.obtenerIdUsuarioActivo()
+            val idUsuario = sessionManager.obtenerIdUsuarioActivo()
 
             if (idUsuario != null) {
                 val intent = Intent(this, Perfil::class.java)
@@ -70,7 +79,6 @@ class CarritoActivity : AppCompatActivity(), ICarritoView,CarritoAdapter.OnItemC
         }
     }
     override fun onEliminarClick(producto: clsProductos, position: Int) {
-        // Llama al Presenter para que maneje la lógica de eliminación
         presenter.eliminarProducto(producto, position)
     }
 

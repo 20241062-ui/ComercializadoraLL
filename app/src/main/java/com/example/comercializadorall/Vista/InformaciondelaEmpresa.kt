@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.comercializadorall.Modelo.LoginModel
+import com.example.comercializadorall.Modelo.SessionManager
 import com.example.comercializadorall.Modelo.clsInformacion
 import com.example.comercializadorall.R
 import com.example.comercializadorall.Presentador.EmpresaPresenter
@@ -22,18 +23,23 @@ import com.example.comercializadorall.Vista.Contracts.EmpresaContract // Asegúr
 // ✅ La Activity debe implementar la interfaz View
 class InformaciondelaEmpresa : AppCompatActivity(), EmpresaContract.View {
 
-    private val loginModel by lazy {
-        LoginModel(
-            getSharedPreferences("SESION_PREF", Context.MODE_PRIVATE),
-            "usuario_logueado" // Clave de sesión
-        )
-    }
-
     private lateinit var presenter: EmpresaPresenter
     private lateinit var txtMisionContenido: TextView
     private lateinit var txtVisionContenido: TextView
     private lateinit var txtMisionTitulo: TextView
     private lateinit var txtVisionTitulo: TextView
+    object AppConstants {
+        const val PREFS_NAME = "TUS_PREFS"
+        const val SESSION_KEY = "SESSION_ID"
+    }
+
+    private val sessionManager by lazy {
+        val prefs = getSharedPreferences(AppConstants.PREFS_NAME, Context.MODE_PRIVATE)
+        SessionManager(
+            prefs,
+            AppConstants.SESSION_KEY
+        )
+    }
 
 
 
@@ -67,9 +73,8 @@ class InformaciondelaEmpresa : AppCompatActivity(), EmpresaContract.View {
         txtVisionTitulo = findViewById(R.id.txtVisionTitulo) // Asumido ID
 
 
-        // Configuración de Eventos del Footer (código existente)
         openLoginImage.setOnClickListener {
-            val idUsuario = loginModel.obtenerIdUsuarioActivo()
+            val idUsuario = sessionManager.obtenerIdUsuarioActivo()
 
             if (idUsuario != null) {
                 val intent = Intent(this, Perfil::class.java)
