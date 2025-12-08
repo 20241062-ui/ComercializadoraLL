@@ -33,11 +33,9 @@ class CategoriasPresenterTest {
 
     @Before
     fun setUp() {
-        // Inicialización de mocks usando la función mock()
         mockView = mock()
         mockRepository = mock()
 
-        // Crea el Presenter, inyectando el Repositorio simulado
         presenter = CategoriasPresenter(mockView, mockRepository)
     }
 
@@ -52,7 +50,7 @@ class CategoriasPresenterTest {
         }.`when`(mockCall).enqueue(any<Callback<List<clsProductos>>>())
         return mockCall
     }
-    // Simula una llamada a la API fallida (Network Error)
+    // Simula una llamada a la API fallida
     private fun mockCallFailure(t: Throwable): Call<List<clsProductos>> {
         val mockCall = mock(Call::class.java) as Call<List<clsProductos>>
         doAnswer { invocation ->
@@ -82,7 +80,7 @@ class CategoriasPresenterTest {
         }.`when`(mockCall).enqueue(any<Callback<clsProductos>>())
         return mockCall
     }
-    // Simula una llamada a la API de un solo producto con error HTTP (ej: 404)
+    // Simula una llamada a la API de un solo producto con error HTTP
     private fun mockSingleCallHttpError(code: Int): Call<clsProductos> {
         val mockCall = mock(Call::class.java) as Call<clsProductos>
         doAnswer { invocation ->

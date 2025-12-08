@@ -25,33 +25,25 @@ class RegistroModelTest {
     //PRUEBAS DE VALIDACIÓN DE LADO DEL CLIENTE (SIN LLAMADA A LA API)
     @Test
     fun registro_camposVacios_llamaOnFailure() {
-        //Intentar registrar con el nombre vacío
         model.registrarUsuario("", "Perez", "correo@test.com", "pass1234", "Cliente", mockListener)
-        //Verifica que el Listener recibió el error de campos obligatorios
         verify(mockListener).onFailure("Todos los campos (nombre, apellido, correo y contraseña) son obligatorios.")
         verify(mockApiService, never()).registrarUsuario(anyString(), anyString(), anyString(), anyString(), anyString())
     }
     @Test
     fun registro_nombreOApellidoConNumeros_llamaOnFailure() {
-        //Intenta registrar con números en el nombre
         model.registrarUsuario("J4vier", "Perez", "correo@test.com", "pass1234", "Cliente", mockListener)
-        //Verificar el error de formato
         verify(mockListener).onFailure("El nombre y el apellido no deben contener números.")
         verify(mockApiService, never()).registrarUsuario(anyString(), anyString(), anyString(), anyString(), anyString())
     }
     @Test
     fun registro_emailInvalido_llamaOnFailure() {
-        //Intenta registrar con un formato de email incorrecto
         model.registrarUsuario("Javier", "Perez", "correo_invalido.com", "pass1234", "Cliente", mockListener)
-        //Verifica el error de formato de email
         verify(mockListener).onFailure("El formato del correo electrónico es inválido. Por favor, revísalo.")
         verify(mockApiService, never()).registrarUsuario(anyString(), anyString(), anyString(), anyString(), anyString())
     }
     @Test
     fun registro_passwordCorta_llamaOnFailure() {
-        //Intenta registrar con una contraseña menor a 8 caracteres
         model.registrarUsuario("Javier", "Perez", "correo@test.com", "pass123", "Cliente", mockListener)
-        //Verifica el error de longitud
         verify(mockListener).onFailure("La contraseña debe tener al menos 8 caracteres para ser segura.")
         verify(mockApiService, never()).registrarUsuario(anyString(), anyString(), anyString(), anyString(), anyString())
     }
@@ -59,25 +51,18 @@ class RegistroModelTest {
     //PRUEBAS DE INTERACCIÓN CON LA API (RESPUESTAS SIMULADAS)
     @Test
     fun registro_respuestaApiExitosa_llamaOnSuccess() {
-        //Simula la respuesta exitosa de la API
         val mensajeExito = "Usuario registrado correctamente"
         val respuestaApi = listOf(clsDatosRespuesta(Estado = "true", Salida = mensajeExito))
 
-        // Simula la llamada de Retrofit (debe usarse Mockito)
         val mockCall = mock(Call::class.java) as Call<List<clsDatosRespuesta>>
         `when`(mockApiService.registrarUsuario(anyString(), anyString(), anyString(), anyString(), anyString())).thenReturn(mockCall)
-
-        // Simula la respuesta del metodo enqueue de Retrofit
         doAnswer { invocation ->
             val callback = invocation.arguments[0] as retrofit2.Callback<List<clsDatosRespuesta>>
             callback.onResponse(mockCall, Response.success(respuestaApi))
             null
         }.`when`(mockCall).enqueue(any())
-
-        // Llama al registro con datos válidos
         model.registrarUsuario("Javier", "Perez", "correo@ok.com", "password1234", "Cliente", mockListener)
 
-        //Verifica que la llamada a la API fue hecha y se llamó a onSuccess
         verify(mockApiService).registrarUsuario(eq("registrar"), eq("Javier"), eq("Perez"), eq("correo@ok.com"), eq("password1234"))
         verify(mockListener).onSuccess(mensajeExito)
         verify(mockListener, never()).onFailure(anyString())
@@ -85,7 +70,6 @@ class RegistroModelTest {
 
     @Test
     fun registro_correoYaExistenteApi_llamaOnFailure() {
-        // Arrange: Simular la respuesta de la API cuando el correo ya está registrado
         val mensajeErrorApi = "El correo ya está registrado."
         val respuestaApi = listOf(clsDatosRespuesta(Estado = "false", Salida = mensajeErrorApi))
 
@@ -98,8 +82,6 @@ class RegistroModelTest {
             null
         }.`when`(mockCall).enqueue(any())
         model.registrarUsuario("Javier", "Perez", "correo@existente.com", "password1234", "Cliente", mockListener)
-
-        //Verifica que se llamó a onFailure con el mensaje de la API
         verify(mockListener).onFailure(mensajeErrorApi)
         verify(mockListener, never()).onSuccess(anyString())
     }

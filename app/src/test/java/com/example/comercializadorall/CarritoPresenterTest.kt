@@ -32,58 +32,38 @@ class CarritoPresenterTest {
         presenter = CarritoPresenter(mockView, mockModel)
     }
 
-    // --- TEST PARA agregarAlCarrito ---
-
+    //TEST PARA agregarAlCarrito
     @Test
     fun agregarAlCarrito_sesionIniciada_agregaProductoYmuestraMensaje() {
-        // Arrange: Simular que la sesión ESTÁ iniciada
         `when`(mockModel.estaSesionIniciada()).thenReturn(true)
-
-        // Act
         presenter.agregarAlCarrito(productoDummy)
-
-        // Assert:
-        // 1. Verificar que el Modelo fue llamado para agregar el producto
         verify(mockModel).agregarProducto(productoDummy)
-        // 2. Verificar que se mostró el mensaje de éxito
         verify(mockView).mostrarMensaje("Producto agregado al carrito")
-        // 3. Verificar que NO se llamó a navegarALogin
         verify(mockView, never()).navegarALogin()
     }
-
     @Test
     fun agregarAlCarrito_sesionNoIniciada_muestraMensajeDeErrorYNavega() {
         //Simula que la sesión NO ESTÁ iniciada
         `when`(mockModel.estaSesionIniciada()).thenReturn(false)
         presenter.agregarAlCarrito(productoDummy)
-
-        // 1. Verificar que el Modelo NO fue llamado para agregar el producto
         verify(mockModel, never()).agregarProducto(any())
-        // 2. Verificar que se mostró el mensaje de error
         verify(mockView).mostrarMensaje("Debes iniciar sesión para agregar productos al carrito.")
-        // 3. Verificar que se llamó a navegarALogin (asumiendo que se activa)
         verify(mockView).navegarALogin()
     }
 
     //TEST PARA cargarCarrito
     @Test
     fun cargarCarrito_modeloVacio_muestraListaVacia() {
-        //Simula que el Modelo devuelve una lista vacía
         val listaVacia = mutableListOf<clsProductos>()
         `when`(mockModel.obtenerCarrito()).thenReturn(listaVacia)
         presenter.cargarCarrito()
-
-        //Verifica que la Vista recibió la lista vacía
         verify(mockView).mostrarCarrito(listaVacia)
     }
     @Test
     fun cargarCarrito_modeloConDatos_muestraListaCompleta() {
-        //Simula que el Modelo devuelve productos
         val listaConProductos = mutableListOf(productoDummy, productoDummy.copy(vchNo_Serie = "SN456"))
         `when`(mockModel.obtenerCarrito()).thenReturn(listaConProductos)
         presenter.cargarCarrito()
-
-        //Verifica que la Vista recibió la lista correcta
         verify(mockView).mostrarCarrito(listaConProductos)
     }
 }
