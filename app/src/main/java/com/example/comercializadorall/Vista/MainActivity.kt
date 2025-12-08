@@ -23,6 +23,7 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
 import com.example.comercializadorall.Modelo.LoginModel
 import com.example.comercializadorall.Modelo.ReproducirModel
+import com.example.comercializadorall.Modelo.SessionManager
 import com.example.comercializadorall.Modelo.clsProductos
 import com.example.comercializadorall.Vista.Adaptador.ProductoAdaptador
 
@@ -40,6 +41,18 @@ class MainActivity : AppCompatActivity(), MainContract {
 
     // Modelo para la URL de video
     private val reproducirModel = ReproducirModel()
+    object AppConstants {
+        const val PREFS_NAME = "TUS_PREFS"
+        const val SESSION_KEY = "SESSION_ID"
+    }
+
+    private val sessionManager by lazy {
+        val prefs = getSharedPreferences(AppConstants.PREFS_NAME, Context.MODE_PRIVATE)
+        SessionManager(
+            prefs,
+            AppConstants.SESSION_KEY
+        )
+    }
     private fun requestNotificationPermission() {
         // Verificar si estamos en Android 13 (API 33) o superior
         if (Build.VERSION.SDK_INT >= 33) {
@@ -57,12 +70,6 @@ class MainActivity : AppCompatActivity(), MainContract {
                 )
             }
         }
-    }
-    private val loginModel by lazy {
-        LoginModel(
-            getSharedPreferences("TUS_PREFS", Context.MODE_PRIVATE),
-            "SESSION_ID"
-        )
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,7 +98,7 @@ class MainActivity : AppCompatActivity(), MainContract {
         val imgInicio: ImageView = findViewById(R.id.imgInicio)
         val imgCategorias: ImageView = findViewById(R.id.imgCategorias)
         openLoginImage.setOnClickListener {
-            val idUsuario = loginModel.obtenerIdUsuarioActivo()
+            val idUsuario = sessionManager.obtenerIdUsuarioActivo()
 
             if (idUsuario != null) {
                 val intent = Intent(this, Perfil::class.java)

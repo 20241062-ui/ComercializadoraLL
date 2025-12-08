@@ -79,29 +79,25 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
             val channel = NotificationChannel(CHANNEL_ID, channelName, importance).apply {
                 description = channelDescription
-                setShowBadge(true) // <--- ESTO ACTIVA EL PUNTO/CONTADOR
+                setShowBadge(true)
             }
             notificationManager.createNotificationChannel(channel)
         }
 
         // D. CONSTRUIR LA NOTIFICACIÓN VISUAL
         val notificationBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(android.R.drawable.ic_dialog_info) // CAMBIA esto por R.drawable.tu_logo
+            .setSmallIcon(android.R.drawable.ic_dialog_info)
             .setContentTitle(title)
             .setContentText(body)
-            .setAutoCancel(true) // Desaparece al tocarla
+            .setAutoCancel(true)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setContentIntent(pendingIntent) // <--- Aquí vinculamos el click con abrir la App
-            .setNumber(number) // <--- Intenta poner el número (depende del launcher)
-        // Opcional: Color del led o acento
-        // .setColor(ContextCompat.getColor(this, R.color.tu_color_primario))
+            .setContentIntent(pendingIntent)
+            .setNumber(number)
+
 
         notificationManager.notify(System.currentTimeMillis().toInt(), notificationBuilder.build())
     }
 
-    // ----------------------------------------------------
-    // IV. LÓGICA DE BACKEND
-    // ----------------------------------------------------
     private fun sendRegistrationToServer(token: String) {
         // TODO: Enviar token al servidor de la comercializadora
     }

@@ -7,7 +7,6 @@ import com.example.comercializadorall.Vista.InformaciondelaEmpresa
 class EmpresaPresenter(private val view: InformaciondelaEmpresa) : EmpresaContract.Presenter {
     override fun cargarDatos() {
 
-        // --- DATOS ESTÁTICOS DE MOCK ---
         val misionEstatica = clsInformacion(
             intid = 1,
             vchtitulo = "Misión",
@@ -20,7 +19,6 @@ class EmpresaPresenter(private val view: InformaciondelaEmpresa) : EmpresaContra
             vchcontenido = "Convertirnos en la empresa líder en soluciones tecnológicas accesibles y de alta calidad, ofreciendo productos innovadores que impulsen el crecimiento, la eficiencia y la transformación digital de nuestros clientes.",
         )
 
-        // Enviamos los datos estáticos a la Vista
         view.mostrarInformacion(misionEstatica, visionEstatica)
     }
 }

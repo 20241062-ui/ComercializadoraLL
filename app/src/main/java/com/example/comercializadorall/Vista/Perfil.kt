@@ -10,15 +10,24 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.comercializadorall.Modelo.LoginModel
+import com.example.comercializadorall.Modelo.SessionManager
 import com.example.comercializadorall.R
 import com.example.comercializadorall.Vista.AppConstants.PREFS_NAME
 import com.example.comercializadorall.Vista.AppConstants.SESSION_KEY
 import com.example.comercializadorall.Vista.activity_kart
 
 class Perfil : AppCompatActivity() {
-    private val loginModel by lazy {
-        val prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        LoginModel(prefs, SESSION_KEY)
+    object AppConstants {
+        const val PREFS_NAME = "TUS_PREFS"
+        const val SESSION_KEY = "SESSION_ID"
+    }
+
+    private val sessionManager by lazy {
+        val prefs = getSharedPreferences(AppConstants.PREFS_NAME, Context.MODE_PRIVATE)
+        SessionManager(
+            prefs,
+            AppConstants.SESSION_KEY
+        )
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,10 +50,8 @@ class Perfil : AppCompatActivity() {
             startActivity(intent)
         }
         btnCerrarSesion.setOnClickListener {
-            // 1. Usa la instancia 'loginModel' ya creada y llama a la función
-            loginModel.cerrarSesion()
+            sessionManager.cerrarSesion()
 
-            // 2. Redirige a MainActivity y limpia la pila
             val intent = Intent(this, MainActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
