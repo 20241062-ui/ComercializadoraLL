@@ -20,7 +20,6 @@ import com.example.comercializadorall.R
 import com.example.comercializadorall.Presentador.EmpresaPresenter
 import com.example.comercializadorall.Vista.Contracts.EmpresaContract // Asegúrate de que la ruta del contrato es correcta
 
-// ✅ La Activity debe implementar la interfaz View
 class InformaciondelaEmpresa : AppCompatActivity(), EmpresaContract.View {
 
     private lateinit var presenter: EmpresaPresenter

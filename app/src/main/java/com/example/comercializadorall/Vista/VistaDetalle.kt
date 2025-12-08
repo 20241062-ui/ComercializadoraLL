@@ -65,15 +65,13 @@ class VistaDetalle : AppCompatActivity(), ICarritoView {
         txtmarca = findViewById(R.id.txtMarca)
         btnComprar = findViewById(R.id.buttonComprar)
 
-        carritoPresenter = CarritoPresenter(this, CarritoModel(this))
-
+        carritoPresenter = CarritoPresenter(this, CarritoModel(this, sessionManager))
         cargarDatosProducto()
 
         btnComprar.setOnClickListener {
             if (sessionManager.estaSesionIniciada()) {
                 productoActual?.let { producto ->
                     carritoPresenter.agregarAlCarrito(producto)
-                    mostrarMensaje("Producto agregado. ID Usuario: ${sessionManager.obtenerIdUsuarioActivo()}")
                 } ?: run {
                     mostrarMensaje("Error: Información del producto no disponible para agregar.")
                 }

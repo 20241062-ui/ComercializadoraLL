@@ -41,7 +41,7 @@ class CarritoActivity : AppCompatActivity(), ICarritoView,CarritoAdapter.OnItemC
         binding = ActivityCarritocompraBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        presenter = CarritoPresenter(this, CarritoModel(this))
+        presenter = CarritoPresenter(this, CarritoModel(this, sessionManager))
 
         adapter = CarritoAdapter(mutableListOf())
         binding.rvProductosCarrito.layoutManager = LinearLayoutManager(this)
