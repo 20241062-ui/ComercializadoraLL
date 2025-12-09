@@ -41,6 +41,13 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    testOptions {
+        unitTests {
+            // La clave: delega la ejecución de la prueba a Gradle
+            // Esto asegura que la clase oculta 'okhttp3.internal.Util' sea cargada.
+            isReturnDefaultValues = true
+        }
+    }
 }
 
 dependencies {
@@ -58,8 +65,8 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    implementation ("com.squareup.retrofit2:retrofit:3.0.0")
-    implementation ("com.squareup.retrofit2:converter-gson:3.0.0")
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation ("com.github.bumptech.glide:glide:5.0.5")
     implementation ("com.google.android.exoplayer:exoplayer:2.19.1")
 
@@ -107,4 +114,18 @@ dependencies {
     implementation("com.journeyapps:zxing-android-embedded:4.3.0")
     implementation("com.google.mlkit:barcode-scanning:17.3.0")
     implementation ("com.google.android.gms:play-services-mlkit-barcode-scanning:18.3.1")
+
+    // 1. MockWebServer de OkHttp (CAUSA PRINCIPAL DEL ERROR)
+    // ESTA DEBE USAR 'testImplementation' porque solo se usa en las pruebas unitarias (src/test).
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.12.0")
+
+
+    // 3. Corrutinas y Testing (Si usas 'runBlocking')
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.0")
+
+    testImplementation("com.squareup.okhttp3:okhttp:4.12.0")
+    // 4. JUnit (Para el @Test)
+    testImplementation ("junit:junit:4.13.2")
+    testImplementation("androidx.arch.core:core-testing:2.2.0")
+// Agregada si la necesitas
 }
