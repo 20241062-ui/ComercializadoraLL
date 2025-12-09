@@ -5,22 +5,21 @@ import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-class CarritoModel(private val context: Context) : ICarritoModel {
-
-
+class CarritoModel(
+    private val context: Context,
+    private val sessionManager: SessionManager // Inyectar SessionManager
+): ICarritoModel {
     private val PREF_NAME_CARRITO = "CARRITO_PREF"
     private val PREF_KEY_CARRITO = "carrito_data"
-    private val PREF_NAME_SESSION = "SESION_PREF"
-    private val PREF_KEY_SESSION = "usuario_logueado"
-
     private val prefs: SharedPreferences = context.getSharedPreferences(PREF_NAME_CARRITO, Context.MODE_PRIVATE)
-    private val sessionPrefs: SharedPreferences = context.getSharedPreferences(PREF_NAME_SESSION, Context.MODE_PRIVATE)
     private val gson = Gson()
 
     private val listType = object : TypeToken<MutableList<clsProductos>>() {}.type
 
 
     override fun agregarProducto(producto: clsProductos) {
+        if (!estaSesionIniciada()) return
+
         val carrito = obtenerCarrito()
 
         val existente = carrito.find { it.vchNo_Serie == producto.vchNo_Serie }
@@ -34,32 +33,55 @@ class CarritoModel(private val context: Context) : ICarritoModel {
     }
 
     override fun obtenerCarrito(): MutableList<clsProductos> {
-        val json = prefs.getString(PREF_KEY_CARRITO, null) ?: return mutableListOf()
+        val claveCarrito = obtenerClaveCarritoPorUsuario()
+
+        // Si no hay clave (no hay sesión), se devuelve una lista vacía.
+        if (claveCarrito == null) return mutableListOf()
+
+        val json = prefs.getString(claveCarrito, null) ?: return mutableListOf()
         return gson.fromJson(json, listType)
     }
 
     override fun guardarCarrito(lista: MutableList<clsProductos>) {
+        val claveCarrito = obtenerClaveCarritoPorUsuario()
+
+        if (claveCarrito == null) return
+
         val json = gson.toJson(lista)
-        prefs.edit().putString(PREF_KEY_CARRITO, json).apply()
+        prefs.edit().putString(claveCarrito, json).apply()
     }
 
     override fun limpiarCarrito() {
-        prefs.edit().remove(PREF_KEY_CARRITO).apply()
+        // 1. Obtener la clave única del usuario logueado
+        val claveCarrito = obtenerClaveCarritoPorUsuario()
+
+        // 2. Si no hay clave (no hay sesión), no hacemos nada
+        if (claveCarrito == null) return
+
+        // 3. Eliminar la clave específica del carrito del usuario
+        prefs.edit().remove(claveCarrito).apply()
     }
 
     override fun eliminarProducto(producto: clsProductos) {
-        val carritoJson = prefs.getString(PREF_KEY_CARRITO, null) ?: return
+        val claveCarrito = obtenerClaveCarritoPorUsuario()
+
+        if (claveCarrito == null) return
+
+        val carritoJson = prefs.getString(claveCarrito, null) ?: return
         val listaActual: MutableList<clsProductos> = gson.fromJson(carritoJson, listType)
 
         listaActual.removeAll { it.vchNo_Serie == producto.vchNo_Serie }
 
         prefs.edit()
-            .putString(PREF_KEY_CARRITO, gson.toJson(listaActual))
+            .putString(claveCarrito, gson.toJson(listaActual))
             .apply()
     }
 
     override fun estaSesionIniciada(): Boolean {
-        val userId = sessionPrefs.getString(PREF_KEY_SESSION, null)
-        return !userId.isNullOrEmpty()
+        return sessionManager.estaSesionIniciada()
+    }
+    private fun obtenerClaveCarritoPorUsuario(): String? {
+        val userId = sessionManager.obtenerIdUsuarioActivo()
+        return if (userId.isNullOrEmpty()) null else "${PREF_KEY_CARRITO}_$userId"
     }
 }

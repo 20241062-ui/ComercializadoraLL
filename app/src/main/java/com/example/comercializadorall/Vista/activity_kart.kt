@@ -1,5 +1,6 @@
 package com.example.comercializadorall.Vista
 
+import android.content.Context
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -9,6 +10,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.comercializadorall.Adaptadores.CarritoAdapter
 import com.example.comercializadorall.Modelo.CarritoModel
+import com.example.comercializadorall.Modelo.SessionManager
 import com.example.comercializadorall.Modelo.clsProductos
 import com.example.comercializadorall.Presentador.CarritoPresenter
 import com.example.comercializadorall.R
@@ -19,6 +21,19 @@ class activity_kart : AppCompatActivity(), ICarritoView {
     private lateinit var binding: ActivityCarritocompraBinding
     private lateinit var presenter: CarritoPresenter
     private lateinit var adapter: CarritoAdapter
+    object AppConstants {
+        const val PREFS_NAME = "TUS_PREFS"
+        const val SESSION_KEY = "SESSION_ID"
+    }
+
+    private val sessionManager: SessionManager by lazy {
+        val prefs = getSharedPreferences(AppConstants.PREFS_NAME, Context.MODE_PRIVATE)
+        SessionManager(
+            prefs,
+            AppConstants.SESSION_KEY
+        )
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -31,7 +46,7 @@ class activity_kart : AppCompatActivity(), ICarritoView {
         binding = ActivityCarritocompraBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        presenter = CarritoPresenter(this, CarritoModel(this))
+        presenter = CarritoPresenter(this, CarritoModel(this, sessionManager))
 
         adapter = CarritoAdapter(mutableListOf())
         binding.rvProductosCarrito.layoutManager = LinearLayoutManager(this)

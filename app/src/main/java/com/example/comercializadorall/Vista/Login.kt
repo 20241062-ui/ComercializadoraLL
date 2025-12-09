@@ -52,6 +52,7 @@ class Login : AppCompatActivity(), LoginContract {
             val correo = etCorreo.text.toString() // Variable renombrada
             val password = etPassword.text.toString()
             presentador.iniciarSesion(correo, password)
+            finish()
         }
 
         tvRegistrar.setOnClickListener {
