@@ -1,5 +1,6 @@
 package com.example.comercializadorall.Vista
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -12,16 +13,15 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
 import com.example.comercializadorall.R
-// --- Importaciones de la lógica del Carrito ---
 import com.example.comercializadorall.Modelo.CarritoModel
 import com.example.comercializadorall.Modelo.clsProductos
 import com.example.comercializadorall.Presentador.CarritoPresenter
 import com.example.comercializadorall.Vista.Contracts.ICarritoView
-import com.example.comercializadorall.Modelo.ICarritoModel // Asegúrate que esta importación sea correcta si usas ICarritoModel en el Presenter
+import com.example.comercializadorall.Modelo.SessionManager
+import com.example.comercializadorall.Vista.AppConstants
 
 class VistaDetalle : AppCompatActivity(), ICarritoView {
 
-    // Vistas consolidadas
     private lateinit var txtNombre: TextView
     private lateinit var txtPrecio: TextView
     private lateinit var txtDescripcion: TextView
@@ -29,13 +29,23 @@ class VistaDetalle : AppCompatActivity(), ICarritoView {
     private lateinit var imgProducto: ImageView
     private lateinit var txtmarca: TextView
     private lateinit var btnComprar: Button
-    // Agregamos la vista que faltaba de la segunda clase
     private lateinit var txtCobertura: TextView
-    // NOTA: Asegúrate de añadir esta vista al XML activity_vista_detalle si no está.
 
-    // Propiedades de Carrito y Producto
     private lateinit var carritoPresenter: CarritoPresenter
     private var productoActual: clsProductos? = null
+
+    object AppConstants {
+        const val PREFS_NAME = "TUS_PREFS"
+        const val SESSION_KEY = "SESSION_ID"
+    }
+
+    private val sessionManager by lazy {
+        val prefs = getSharedPreferences(AppConstants.PREFS_NAME, Context.MODE_PRIVATE)
+        SessionManager(
+            prefs,
+            AppConstants.SESSION_KEY
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +57,6 @@ class VistaDetalle : AppCompatActivity(), ICarritoView {
             insets
         }
 
-        // 1. Inicialización de Vistas (Asegúrate de incluir txtCobertura)
         txtNombre = findViewById(R.id.txtNombre)
         txtPrecio = findViewById(R.id.txtPrecio)
         txtDescripcion = findViewById(R.id.txtDescripcion)
@@ -55,66 +64,70 @@ class VistaDetalle : AppCompatActivity(), ICarritoView {
         imgProducto = findViewById(R.id.txtImagen)
         txtmarca = findViewById(R.id.txtMarca)
         btnComprar = findViewById(R.id.buttonComprar)
-        // Inicialización de la vista agregada
-        // ATENCIÓN: Debes usar el ID correcto de tu XML si lo agregaste
-        // Si no agregaste la vista, comenta esta línea o crea el TextView en el XML.
-        // txtCobertura = findViewById(R.id.txtCobertura)
 
-
-        // 2. Inicializar Presenter
-        carritoPresenter = CarritoPresenter(this, CarritoModel(this))
-
-        // 3. Cargar Datos del Producto desde el Intent
+        carritoPresenter = CarritoPresenter(this, CarritoModel(this, sessionManager))
         cargarDatosProducto()
 
-        // 4. Listener para Añadir al Carrito (con llamada al Presenter)
         btnComprar.setOnClickListener {
-            productoActual?.let { producto ->
-                carritoPresenter.agregarAlCarrito(producto)
-            } ?: run {
-                mostrarMensaje("Error: Información del producto no disponible para agregar.")
+            if (sessionManager.estaSesionIniciada()) {
+                productoActual?.let { producto ->
+                    carritoPresenter.agregarAlCarrito(producto)
+                } ?: run {
+                    mostrarMensaje("Error: Información del producto no disponible para agregar.")
+                }
+            } else {
+                mostrarMensaje("¡Debes iniciar sesión para agregar productos al carrito!")
+                navegarALogin()
             }
         }
 
-        // --- Navegación Inferior ---
         val openLoginImage: ImageView = findViewById(R.id.imgPerfil)
         val imgInfo: ImageView = findViewById(R.id.imgInfo)
         val imgInicio: ImageView = findViewById(R.id.imgInicio)
         val imgCategorias: ImageView = findViewById(R.id.imgCategorias)
-        val imgEmpresa: ImageView = findViewById(R.id.imgEmpresa)
 
         openLoginImage.setOnClickListener {
-            startActivity(Intent(this, Login::class.java))
+            val idUsuario = sessionManager.obtenerIdUsuarioActivo()
+
+            if (idUsuario != null) {
+                val intent = Intent(this, Perfil::class.java)
+                startActivity(intent)
+
+            } else {
+                val intent = Intent(this, Login::class.java)
+                startActivity(intent)
+            }
         }
+
         imgInfo.setOnClickListener {
-            startActivity(Intent(this, InformaciondelaEmpresa::class.java))
+            val intent = Intent(this, InformaciondelaEmpresa::class.java)
+            startActivity(intent)
         }
+
         imgInicio.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
         }
+
         imgCategorias.setOnClickListener {
-            startActivity(Intent(this, CategoriasActivity::class.java))
+            val intent = Intent(this, CategoriasActivity::class.java)
+            startActivity(intent)
         }
     }
 
     private fun cargarDatosProducto() {
         val intent = intent
 
-        // 1. Extraer los datos del Intent (incluyendo Cobertura, Serie y la forma de tu segunda clase)
-        val noSerie = intent.getStringExtra("producto_id") ?: intent.getStringExtra("producto_serie") // Soporte para ambos nombres
+        val noSerie = intent.getStringExtra("producto_id") ?: intent.getStringExtra("producto_serie")
         val nombre = intent.getStringExtra("producto_nombre")
         val descripcion = intent.getStringExtra("producto_descripcion")
         val imagenUrl = intent.getStringExtra("producto_imagen")
         val marca = intent.getStringExtra("producto_marca")
-        val cobertura = intent.getStringExtra("producto_cobertura") // Dato de la segunda clase
-        val categoria = intent.getStringExtra("producto_categoria")
+        val cobertura = intent.getStringExtra("producto_cobertura")
         val precio = intent.getFloatExtra("producto_precio", 0.0f)
         val stock = intent.getIntExtra("producto_stock", 0)
 
-        // 2. Crear el objeto clsProductos
         if (noSerie != null) {
-            // ATENCIÓN: Asumo que ya ajustaste clsProductos para aceptar todos estos parámetros
-            // (vchCobertura es el nuevo parámetro)
             productoActual = clsProductos(
                 vchNo_Serie = noSerie,
                 vchNombre = nombre ?: "",
@@ -131,17 +144,13 @@ class VistaDetalle : AppCompatActivity(), ICarritoView {
             btnComprar.isEnabled = false
         }
 
-        // 3. Asignar los datos a las Vistas
         productoActual?.let { p ->
             txtNombre.text = p.vchNombre
             txtDescripcion.text = p.vchDescripcion
             txtStock.text = "Stock: ${p.intStock} Unidades"
             txtPrecio.text = String.format("$ %.2f", p.floPrecioUnitario)
             txtmarca.text = p.vchMarca
-            // Si txtCobertura está inicializado:
-            // if (::txtCobertura.isInitialized) txtCobertura.text = "Cobertura: ${p.vchCobertura}"
 
-            // Carga de imagen con Glide
             if (p.vchImagen.isNotEmpty()) {
                 val URL_BASE_IMAGENES = "http://comercializadorall.grupoctic.com/ComercializadoraLL/img/"
                 val urlCompleta = URL_BASE_IMAGENES + p.vchImagen
@@ -152,11 +161,7 @@ class VistaDetalle : AppCompatActivity(), ICarritoView {
         }
     }
 
-    // --- Implementación de ICarritoView ---
-
-    override fun mostrarCarrito(lista: MutableList<clsProductos>) {
-        // No se usa aquí.
-    }
+    override fun mostrarCarrito(lista: MutableList<clsProductos>) {}
 
     override fun mostrarMensaje(msg: String) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()

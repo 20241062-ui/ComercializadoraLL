@@ -1,5 +1,6 @@
 package com.example.comercializadorall.Vista
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -13,6 +14,8 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.comercializadorall.Modelo.LoginModel
 import com.example.comercializadorall.Presentador.LoginPresenter
 import com.example.comercializadorall.R
+import com.example.comercializadorall.Vista.AppConstants.PREFS_NAME
+import com.example.comercializadorall.Vista.AppConstants.SESSION_KEY
 import com.example.comercializadorall.Vista.Contracts.LoginContract
 
 class Login : AppCompatActivity(), LoginContract {
@@ -21,6 +24,7 @@ class Login : AppCompatActivity(), LoginContract {
     private lateinit var btnAcceder: Button
     private lateinit var tvRegistrar: TextView
     private lateinit var presentador: LoginPresenter
+    private lateinit var loginModel: LoginModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -36,14 +40,19 @@ class Login : AppCompatActivity(), LoginContract {
         tvRegistrar = findViewById(R.id.txtRegistrar)
 
 
-        val model = LoginModel(context = this)
 
-        val presentador = LoginPresenter(this, model)
+        loginModel = LoginModel(
+            getSharedPreferences("TUS_PREFS", Context.MODE_PRIVATE),
+            "SESSION_ID"
+        )
+
+        val presentador = LoginPresenter(this, loginModel)
 
         btnAcceder.setOnClickListener {
             val correo = etCorreo.text.toString() // Variable renombrada
             val password = etPassword.text.toString()
             presentador.iniciarSesion(correo, password)
+            finish()
         }
 
         tvRegistrar.setOnClickListener {

@@ -12,13 +12,11 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import com.google.gson.GsonBuilder
 
-// 1. Instancia global de Retrofit (No se modifica)
 object RetrofitClient {
     private const val BASE_URL = "https://comercializadorall.grupoctic.com/ComercializadoraLL/API/"
 
     val instance: ifaceApiService by lazy {
 
-        // 💡 CREAR UN PARSER GSON LENIENTE
         val gson = GsonBuilder()
             .setLenient()
             .create()
@@ -33,9 +31,7 @@ object RetrofitClient {
     }
 }
 
-// 2. Implementación del Repository (No se modifica)
 class CategoriasRepository(private val apiService: ifaceApiService) : CategoriasContract.Model {
-    // ... (métodos del Repository) ...
     override fun obtenerCategoriasIniciales(): Call<List<clsProductos>> {
         return apiService.obtenerProductos()
     }
@@ -47,20 +43,15 @@ class CategoriasRepository(private val apiService: ifaceApiService) : Categorias
     }
 }
 
-
-// 3. Implementación del Presenter (Lógica) - ¡CORREGIDO!
-class CategoriasPresenter(
-    private var view: CategoriasContract.View?,
-    private val repository: CategoriasRepository = CategoriasRepository(RetrofitClient.instance)
+class CategoriasPresenter(private var view: CategoriasContract.View?, private val repository: CategoriasRepository = CategoriasRepository(RetrofitClient.instance)
 ) : CategoriasContract.Presenter {
 
-    // 💡 Método iniciar() - Se llama al iniciar la Activity
     override fun iniciar() {
-        view?.mostrarCargando(true) // 👈 INICIO DE CARGA
+        view?.mostrarCargando(true)
 
         repository.obtenerCategoriasIniciales().enqueue(object : Callback<List<clsProductos>> {
             override fun onResponse(call: Call<List<clsProductos>>, response: Response<List<clsProductos>>) {
-                view?.mostrarCargando(false) // 👈 FIN DE CARGA (Éxito)
+                view?.mostrarCargando(false)
                 if (response.isSuccessful && response.body() != null) {
                     view?.mostrarCategorias(response.body()!!)
                 } else {
@@ -68,24 +59,24 @@ class CategoriasPresenter(
                 }
             }
             override fun onFailure(call: Call<List<clsProductos>>, t: Throwable) {
-                view?.mostrarCargando(false) // 👈 FIN DE CARGA (Fallo)
+                view?.mostrarCargando(false)
                 view?.mostrarMensajeError("Error de red: ${t.message}")
             }
         })
     }
 
-    // 💡 Lógica para la búsqueda por texto (EditText)
     override fun buscarProductos(query: String) {
-        if (query.isBlank()) {
+        val queryLimpia = query.trim()
+        if (queryLimpia.isBlank()) {
             view?.mostrarMensajeError("Introduce un término de búsqueda.")
             return
         }
 
-        view?.mostrarCargando(true) // 👈 INICIO DE CARGA
+        view?.mostrarCargando(true)
 
-        repository.buscarProductosPorQuery(query).enqueue(object : Callback<List<clsProductos>> {
+        repository.buscarProductosPorQuery(queryLimpia).enqueue(object : Callback<List<clsProductos>> {
             override fun onResponse(call: Call<List<clsProductos>>, response: Response<List<clsProductos>>) {
-                view?.mostrarCargando(false) // 👈 FIN DE CARGA (Éxito)
+                view?.mostrarCargando(false)
                 if (response.isSuccessful && response.body() != null) {
                     val resultados = response.body()!!
                     if (resultados.isNotEmpty()) {
@@ -94,33 +85,38 @@ class CategoriasPresenter(
                         view?.mostrarMensajeError("No se encontraron productos para \"$query\".")
                     }
                 } else {
-                    // 💡 LÓGICA CORREGIDA PARA MOSTRAR ERROR HTTP DETALLADO
                     val errorCode = response.code()
                     val errorMessage = response.message()
 
-                    // El error 200 sin cuerpo (body) también es un error lógico de datos
                     if (errorCode == 200) {
                         view?.mostrarMensajeError("Error 200: El servidor devolvió una respuesta vacía o malformada.")
                     } else {
-                        // Muestra el código de error para diagnóstico (404, 500, etc.)
                         view?.mostrarMensajeError("Error. HTTP $errorCode: $errorMessage")
                     }
                 }
             }
             override fun onFailure(call: Call<List<clsProductos>>, t: Throwable) {
-                view?.mostrarCargando(false) // 👈 FIN DE CARGA (Fallo)
+                view?.mostrarCargando(false)
                 view?.mostrarMensajeError("Error: ${t.message}")
             }
         })
     }
 
-    // 💡 Lógica para el escaneo QR
     override fun escanearQR(codigoQR: String) {
-        view?.mostrarCargando(true) // 👈 INICIO DE CARGA
 
-        repository.obtenerProductoPorCodigo(codigoQR).enqueue(object : Callback<clsProductos> {
+        val codigoLimpio = codigoQR.trim()
+
+        if (codigoLimpio.isBlank()) {
+            view?.mostrarMensajeError("El código QR no es válido.")
+            return
+        }
+
+        view?.mostrarCargando(true)
+
+        repository.obtenerProductoPorCodigo(codigoLimpio).enqueue(object : Callback<clsProductos> {
+
             override fun onResponse(call: Call<clsProductos>, response: Response<clsProductos>) {
-                view?.mostrarCargando(false) // 👈 FIN DE CARGA (Éxito o 404)
+                view?.mostrarCargando(false)
                 val producto = response.body()
 
                 if (response.isSuccessful && producto != null) {
@@ -132,13 +128,12 @@ class CategoriasPresenter(
                 }
             }
             override fun onFailure(call: Call<clsProductos>, t: Throwable) {
-                view?.mostrarCargando(false) // 👈 FIN DE CARGA (Fallo)
+                view?.mostrarCargando(false)
                 view?.mostrarMensajeError("Error de red al escanear: ${t.message}")
             }
         })
     }
 
-    // 💡 Método de control: Se llama al destruir la Activity (detener)
     override fun detener() {
         view = null
     }

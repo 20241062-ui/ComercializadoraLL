@@ -1,22 +1,17 @@
 package com.example.comercializadorall.Modelo
 
-import com.example.comercializadorall.Modelo.ifaceApiService // Interfaz actualizada
-import com.example.comercializadorall.Vista.clsDatosRespuesta // Clase de respuesta
+import com.example.comercializadorall.Vista.clsDatosRespuesta
 import com.google.gson.GsonBuilder
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import android.content.Context
+import android.content.SharedPreferences
 
-class LoginModel (private val context: Context){
+class LoginModel (private val sessionPrefs: SharedPreferences, private val sessionKey: String){
 
     private val apiService: ifaceApiService
-
-    // 🔑 Preferencias y Claves (Deben coincidir con CarritoModel)
-    private val sessionPrefs = context.getSharedPreferences("SESION_PREF", Context.MODE_PRIVATE)
-    private val sessionKey = "usuario_logueado" // Clave para el ID del usuario
 
     init {
         val gson = GsonBuilder()
@@ -30,7 +25,6 @@ class LoginModel (private val context: Context){
         apiService = retrofit.create(ifaceApiService::class.java)
     }
 
-    // Método para guardar los datos de la sesión de forma persistente
     fun guardarSesionActiva(idUsuario: String) {
         sessionPrefs.edit().apply {
             putString(sessionKey, idUsuario)
@@ -38,7 +32,6 @@ class LoginModel (private val context: Context){
         }
     }
 
-    // Lógica para iniciar sesión
     fun iniciarSesion(correo: String, password: String, callback: (List<clsDatosRespuesta>?, String?) -> Unit) {
         apiService.iniciarSesion("login", correo, password)
             .enqueue(object : Callback<List<clsDatosRespuesta>> {
@@ -51,11 +44,8 @@ class LoginModel (private val context: Context){
 
                         if (datosRespuesta != null && datosRespuesta.firstOrNull()?.Estado == "Correcto") {
                             val userData = datosRespuesta.firstOrNull()
-                            if (userData != null) {
-                                // 1. Extraer los datos necesarios (Asumiendo que 'user_id' y 'nombreUsuario' existen en clsDatosRespuesta)
+                            if (userData?.user_id != null) {
                                 val userId = userData.user_id.toString()
-
-                                // 2. 🚨 Llamada a la función de guardado
                                 guardarSesionActiva(userId)
                             }
                         }

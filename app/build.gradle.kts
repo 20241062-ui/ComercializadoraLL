@@ -77,6 +77,30 @@ dependencies {
     implementation("androidx.media3:media3-extractor:1.8.0")
     implementation("com.squareup.okhttp3:logging-interceptor:5.3.2")
 
+    // PRUEBAS DE INSTRUMENTACIÓN (androidTestImplementation)
+    // Framework de pruebas principal
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test:rules:1.7.0")
+
+    // Espresso para interactuar con la UI
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+    // MockWebServer: CLAVE para simular el servidor de la API
+    androidTestImplementation("com.squareup.okhttp3:mockwebserver:5.3.2")
+    implementation("com.squareup.okhttp3:okhttp:5.3.2")
+
+    // Si usas Hilt para inyección de dependencias
+    androidTestImplementation("com.google.dagger:hilt-android-testing:2.57.2")
+    implementation("com.squareup.okhttp3:logging-interceptor:5.3.2")
+    // ... y el procesador de anotaciones
+    kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.57.2")
+
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("org.mockito:mockito-core:5.20.0")
+    testImplementation("org.mockito:mockito-inline:5.2.0")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:6.1.0")
+    testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0") // Ayuda con sintaxis Kotlin
+    testImplementation(kotlin("test"))
     // Dependencia de ML Kit para escaneo de códigos (Opción moderna)
     implementation("com.google.mlkit:barcode-scanning:17.3.0")
     implementation ("com.google.android.gms:play-services-mlkit-barcode-scanning:18.3.1")
