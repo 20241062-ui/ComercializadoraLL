@@ -145,7 +145,7 @@ private object Constants {
                         }
                     } else {
                         // Manejo de códigos HTTP como 404, 500, etc.
-                        Log.e("PRUEBA_REGISTRO", "❌ Error HTTP ${response.code()} en Registro.")
+                        Log.e("PRUEBA_REGISTRO", "Error HTTP ${response.code()} en Registro.")
                     }
                 }
 
