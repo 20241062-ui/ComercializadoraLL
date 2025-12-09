@@ -41,6 +41,13 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    testOptions {
+        unitTests {
+            // La clave: delega la ejecución de la prueba a Gradle
+            // Esto asegura que la clase oculta 'okhttp3.internal.Util' sea cargada.
+            isReturnDefaultValues = true
+        }
+    }
 }
 
 dependencies {
@@ -58,8 +65,8 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    implementation ("com.squareup.retrofit2:retrofit:3.0.0")
-    implementation ("com.squareup.retrofit2:converter-gson:3.0.0")
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation ("com.github.bumptech.glide:glide:5.0.5")
     implementation ("com.google.android.exoplayer:exoplayer:2.19.1")
 
@@ -70,41 +77,6 @@ dependencies {
     implementation("androidx.media3:media3-extractor:1.8.0")
     implementation("com.squareup.okhttp3:logging-interceptor:5.3.2")
 
-    // Tests unitarios
-    testImplementation ("junit:junit:4.13.2")
-    testImplementation ("org.mockito:mockito-core:5.3.1")
-    testImplementation ("org.mockito:mockito-inline:4.+")
-    testImplementation("org.mockito.kotlin:mockito-kotlin:5.3.1")
-    // Necesario para que Retrofit funcione con Mockito
-    testImplementation("com.squareup.retrofit2:retrofit:2.9.0")
-    testImplementation ("org.mockito:mockito-core:5.3.1")
-    testImplementation ("org.mockito:mockito-inline:5.2.0")
-    testImplementation ("androidx.arch.core:core-testing:2.2.0")
-
-    // Tests instrumentados
-    androidTestImplementation ("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation ("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation ("org.mockito:mockito-android:5.3.1")
-
-    // PRUEBAS DE INSTRUMENTACIÓN (androidTestImplementation)
-    // Framework de pruebas principal
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test:rules:1.7.0")
-
-    // Espresso para interactuar con la UI
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-
-    // MockWebServer: CLAVE para simular el servidor de la API
-    androidTestImplementation("com.squareup.okhttp3:mockwebserver:5.3.2")
-
-    // Si usas Hilt para inyección de dependencias
-    androidTestImplementation("com.google.dagger:hilt-android-testing:2.57.2")
-    // ... y el procesador de anotaciones
-    kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.57.2")
-
-    testImplementation("org.mockito.kotlin:mockito-kotlin:6.1.0")
-    testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0") // Ayuda con sintaxis Kotlin
-    testImplementation(kotlin("test"))
     // Dependencia de ML Kit para escaneo de códigos (Opción moderna)
     implementation("com.google.mlkit:barcode-scanning:17.3.0")
     implementation ("com.google.android.gms:play-services-mlkit-barcode-scanning:18.3.1")
@@ -118,4 +90,18 @@ dependencies {
     implementation("com.journeyapps:zxing-android-embedded:4.3.0")
     implementation("com.google.mlkit:barcode-scanning:17.3.0")
     implementation ("com.google.android.gms:play-services-mlkit-barcode-scanning:18.3.1")
+
+    // 1. MockWebServer de OkHttp (CAUSA PRINCIPAL DEL ERROR)
+    // ESTA DEBE USAR 'testImplementation' porque solo se usa en las pruebas unitarias (src/test).
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.12.0")
+
+
+    // 3. Corrutinas y Testing (Si usas 'runBlocking')
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.0")
+
+    testImplementation("com.squareup.okhttp3:okhttp:4.12.0")
+    // 4. JUnit (Para el @Test)
+    testImplementation ("junit:junit:4.13.2")
+    testImplementation("androidx.arch.core:core-testing:2.2.0")
+// Agregada si la necesitas
 }
